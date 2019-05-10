@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.opratel.opraTest" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="SmsLog">
+        <param name="android-package" value="be.creacore.smslog.SmsLog" />
+    </feature>
+    <feature name="Screenshot">
+        <param name="android-package" value="com.darktalker.cordova.screenshot.Screenshot" />
+    </feature>
+    <feature name="SocketsForCordova">
+        <param name="android-package" value="cz.blocshop.socketsforcordova.SocketPlugin" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="BackgroundMode">
+        <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode" />
+    </feature>
+    <feature name="WifiManagerPlugin">
+        <param name="android-package" value="dk.kapetanovic.wifimanager.WifiManagerPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Focus">
+        <param name="android-package" value="fr._46cl.focus.Focus" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <name>opraTest</name>
+    <description>
+        Aplicacion para el uso de la compañia Opratel 
+    </description>
+    <author email="ramiro.portas@gmail.com" href="http://cordova.io">
+        ramiro ariel portas
+    </author>
+    <content src="index.html" />
+    <allow-navigation href="*" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="market:*" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="KeepRunning" value="true" />
+    <preference name="AndroidLaunchMode" value="singleInstance" />
+    <preference name="android-minSdkVersion" value="23" />
+    <preference name="Fullscreen" value="true" />
+    <preference name="BackgroundColor" value="#212121" />
+    <preference name="Orientation" value="portrait" />
+</widget>

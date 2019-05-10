@@ -1,0 +1,74 @@
+{
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-smslog"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-smslog": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-smslog@^1.1.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "com.darktalker.cordova.screenshot": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/gitawego/cordova-screenshot.git"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cz.blocshop.socketsforcordova": {
+    "source": {
+      "type": "registry",
+      "id": "cz.blocshop.socketsforcordova"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-background-mode": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-background-mode@^0.7.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-android-wifi-manager": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-android-wifi-manager@^1.2.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "fr._46cl.focus": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/46cl/cordova-android-focus-plugin"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-inappbrowser": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-inappbrowser@3.0.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}

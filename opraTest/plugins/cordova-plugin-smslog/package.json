@@ -1,0 +1,97 @@
+{
+  "_args": [
+    [
+      "cordova-plugin-smslog",
+      "/home/ramiro/www/git/opraTest"
+    ]
+  ],
+  "_from": "cordova-plugin-smslog@latest",
+  "_id": "cordova-plugin-smslog@1.1.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/cordova-plugin-smslog",
+  "_nodeVersion": "9.6.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-smslog_1.1.1_1530712620145_0.23391016420835498"
+  },
+  "_npmUser": {
+    "email": "contact@creacore.be",
+    "name": "creacore"
+  },
+  "_npmVersion": "6.1.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "cordova-plugin-smslog",
+    "raw": "cordova-plugin-smslog",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-smslog/-/cordova-plugin-smslog-1.1.1.tgz",
+  "_shasum": "a9022150bbea7d0f59308023d56ce28a58b53950",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-smslog",
+  "_where": "/home/ramiro/www/git/opraTest",
+  "author": {
+    "name": "Creacore"
+  },
+  "bugs": {
+    "url": "https://github.com/creacore-team/cordova-plugin-smslog/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-smslog",
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {},
+  "description": "A plugin to get the device's sms log",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "fileCount": 15,
+    "integrity": "sha512-oENmkyQp+Ufym0yYHEnQZz3epFhtVylgSajgCZaK63cOInrPFn3ZKL+o87ZWAKOHz6oDAmYUcOQt7W5JXBDKBQ==",
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJbPNIsCRA9TVsSAnZWagAAx6UP/i2lgR1TGGHp9FaRwkHF\n1x/slmJWJxM9ZTuwF2ICq+GKhqvtxw2CIRMFKBRjRfw9YRYt+sj2pctKwOLD\ntGA7FYBVB7XTiHewMPxJ3zp+ciVQ2wlGN80N5CZ0ystbGlAdAeTfMD+/H+p9\nmhv7ye4wvK4dvSwdhyuuh10Li/QAogH/Z7kmkopw87vU2A9GD3jsjWfQXwNN\n1eEiAW0wkUWfIarlniXps4V1De6zDeGECqorci1R31MKX5UA5w0BjQQof27k\ngia85z3FYF9BPdczKuvei9hYL794ZbNj1xm6582+ME8eKHe8QONW7GqxI+es\n2N1nHIDmQRZJHMiKd7ie46pdp/3a59OJVNSf83JmqXCgEAkND+PNEcb060nl\n7dJyiqgnbPyRg25WEddeXkyXEK2evyMqaGnUeOtLoSMbH+IoR96sxhCwJ2WU\nBSHL2RjAlz/R1U5semSSy26YWgUocb9uy6tJbVNtThybnS2TOSvAlmwFl7rX\nDwYRWMu8in8K13bfDZUCWGHxrN3eYuXul2Xwxrz1U9D1sMHxv5WXK323uOhG\nG6b6RH+5rHe9bkgq1UjP6qVBpavz5sQSbeEkkWPFqM+HVNgbELR+SbRlXGjV\nwiI60R6kKbOXoQyKP9U0xGXI4KBz4RHHwRWYRclsMx87t+Gu2thfxRNOCbJN\nDi/a\r\n=kcs2\r\n-----END PGP SIGNATURE-----\r\n",
+    "shasum": "a9022150bbea7d0f59308023d56ce28a58b53950",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-smslog/-/cordova-plugin-smslog-1.1.1.tgz",
+    "unpackedSize": 31386
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    },
+    {
+      "name": "cordova-android",
+      "version": ">=5.0.0"
+    }
+  ],
+  "gitHead": "5b311d8204ddcf7738820186569c753c6119b1eb",
+  "homepage": "https://github.com/creacore-team/cordova-plugin-smslog#readme",
+  "keywords": [
+    "cordova",
+    "cordova-android",
+    "ecosystem:cordova",
+    "smslog"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "creacore",
+      "email": "contact@creacore.be"
+    }
+  ],
+  "name": "cordova-plugin-smslog",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creacore-team/cordova-plugin-smslog.git"
+  },
+  "version": "1.1.1"
+}
