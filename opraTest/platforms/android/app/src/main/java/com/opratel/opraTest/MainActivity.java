@@ -68,9 +68,6 @@ public class MainActivity extends CordovaActivity
 
     }
 
-
-
-
     /*
     * RAMIRO PORTAS
     * ESTE METHOD SE LLAMA CUANDO SE DISPARA EL EVENTO AL CARGAR UNA NUEVA PAGINA
@@ -93,18 +90,9 @@ public class MainActivity extends CordovaActivity
     * */
 
     @Override
-    public void sarasa(String url){
-        LOG.d(TAG, "SI CAMBIA LA PAG VEO ESTO " + url);
-        if(url == "https://www.google.com/?gws_rd=ssl"){
-            try {
-                Thread.sleep(2000);
+    public void onPageFinishedLoading(String url){
+        if(url.indexOf("google") != -1){
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            loadUrl("file:///android_asset/www/index.html");
         }
-
-
     }
 }

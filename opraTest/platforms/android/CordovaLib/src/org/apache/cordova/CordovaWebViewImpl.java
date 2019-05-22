@@ -560,7 +560,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
                 pluginManager.postMessage("exit", null);
             }
 
-            contextCordovaActivity.sarasa(url);
+            contextCordovaActivity.onPageFinishedLoading(url);
         }
 
         @Override

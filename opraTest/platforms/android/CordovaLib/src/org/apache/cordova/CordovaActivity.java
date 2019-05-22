@@ -102,9 +102,9 @@ public class CordovaActivity extends Activity {
     protected ArrayList<PluginEntry> pluginEntries;
     protected CordovaInterfaceImpl cordovaInterface;
 
-    public void sarasa(String url){
-        LOG.d(TAG, "CordovaActivity.onPageFinishedLoading2()");
-        
+    // Method necesario para poder realizar Override en MainActivity
+    public void onPageFinishedLoading(String url){
+
     }
     /**
      * Called when the activity is first created.
