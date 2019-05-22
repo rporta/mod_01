@@ -47,7 +47,7 @@ import java.util.Set;
 public class CordovaWebViewImpl implements CordovaWebView {
 
     public static final String TAG = "CordovaWebViewImpl";
-
+    public CordovaActivity contextCordovaActivity;
     private PluginManager pluginManager;
 
     protected final CordovaWebViewEngine engine;
@@ -60,7 +60,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
     private CordovaPreferences preferences;
     private CoreAndroid appPlugin;
     private NativeToJsMessageQueue nativeToJsMessageQueue;
-    private EngineClient engineClient = new EngineClient();
+    private EngineClient engineClient;
     private boolean hasPausedEver;
 
     // The URL passed to loadUrl(), not necessarily the URL of the current page.
@@ -73,6 +73,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
     private Set<Integer> boundKeyCodes = new HashSet<Integer>();
 
     public static CordovaWebViewEngine createEngine(Context context, CordovaPreferences preferences) {
+
         String className = preferences.getString("webview", SystemWebViewEngine.class.getCanonicalName());
         try {
             Class<?> webViewClass = Class.forName(className);
@@ -83,9 +84,11 @@ public class CordovaWebViewImpl implements CordovaWebView {
         }
     }
 
-    public CordovaWebViewImpl(CordovaWebViewEngine cordovaWebViewEngine) {
+    public CordovaWebViewImpl(CordovaActivity context, CordovaWebViewEngine cordovaWebViewEngine) {
         this.engine = cordovaWebViewEngine;
+        contextCordovaActivity = context;
     }
+
 
     // Convenience method for when creating programmatically (not from Config.xml).
     public void init(CordovaInterface cordova) {
@@ -109,6 +112,8 @@ public class CordovaWebViewImpl implements CordovaWebView {
         if (preferences.getBoolean("DisallowOverscroll", false)) {
             engine.getView().setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
+        this.engineClient = new EngineClient();
+        this.engineClient.addContextCordovaActivity(contextCordovaActivity);
         engine.init(this, cordova, engineClient, resourceApi, pluginManager, nativeToJsMessageQueue);
         // This isn't enforced by the compiler, so assert here.
         assert engine.getView() instanceof CordovaWebViewEngine.EngineView;
@@ -492,12 +497,15 @@ public class CordovaWebViewImpl implements CordovaWebView {
         hideCustomView();
     }
 
-    protected class EngineClient implements CordovaWebViewEngine.Client {
+    public class EngineClient implements CordovaWebViewEngine.Client {
+        public CordovaActivity contextCordovaActivity;
         @Override
         public void clearLoadTimeoutTimer() {
             loadUrlTimeout++;
         }
-
+        public void addContextCordovaActivity(CordovaActivity contextCordovaActivity){
+            this.contextCordovaActivity = contextCordovaActivity;
+        }
         @Override
         public void onPageStarted(String newUrl) {
             LOG.d(TAG, "onPageDidNavigate(" + newUrl + ")");
@@ -551,6 +559,8 @@ public class CordovaWebViewImpl implements CordovaWebView {
             if (url.equals("about:blank")) {
                 pluginManager.postMessage("exit", null);
             }
+
+            contextCordovaActivity.sarasa(url);
         }
 
         @Override

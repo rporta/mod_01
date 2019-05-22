@@ -9,19 +9,15 @@
         "parents": {
           "/*": [
             {
-              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"SmsLog\"><param name=\"android-package\" value=\"be.creacore.smslog.SmsLog\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"Screenshot\"><param name=\"android-package\" value=\"com.darktalker.cordova.screenshot.Screenshot\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<feature name=\"SocketsForCordova\"><param name=\"android-package\" value=\"cz.blocshop.socketsforcordova.SocketPlugin\" /></feature>",
+              "xml": "<preference name=\"android-minSdkVersion\" value=\"23\" />",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"WifiManagerPlugin\"><param name=\"android-package\" value=\"dk.kapetanovic.wifimanager.WifiManagerPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             },
             {
@@ -41,19 +37,23 @@
               "count": 1
             },
             {
-              "xml": "<preference name=\"android-minSdkVersion\" value=\"23\" />",
+              "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
               "count": 1
             },
             {
-              "xml": "<feature name=\"WifiManagerPlugin\"><param name=\"android-package\" value=\"dk.kapetanovic.wifimanager.WifiManagerPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "xml": "<feature name=\"SmsLog\"><param name=\"android-package\" value=\"be.creacore.smslog.SmsLog\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SocketsForCordova\"><param name=\"android-package\" value=\"cz.blocshop.socketsforcordova.SocketPlugin\" /></feature>",
               "count": 1
             },
             {
               "xml": "<feature name=\"Focus\"><param name=\"android-package\" value=\"fr._46cl.focus.Focus\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
               "count": 1
             }
           ]
@@ -63,23 +63,15 @@
         "parents": {
           "/*": [
             {
-              "xml": "<uses-permission android:name=\"android.permission.READ_SMS\" />",
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
               "count": 1
             },
             {
-              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+              "xml": "<uses-permission android:name=\"android.permission.READ_SMS\" />",
               "count": 1
             }
           ],
           "/manifest": [
-            {
-              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
-              "count": 1
-            },
             {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
               "count": 1
@@ -95,6 +87,14 @@
             {
               "xml": "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\" />",
               "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
             }
           ],
           "/manifest/application": [
@@ -108,16 +108,10 @@
     }
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.opratel.opraTest"
-    },
-    "cordova-plugin-smslog": {
-      "PACKAGE_NAME": "com.opratel.opraTest"
-    },
     "com.darktalker.cordova.screenshot": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
-    "cz.blocshop.socketsforcordova": {
+    "cordova-plugin-android-wifi-manager": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
     "cordova-plugin-device": {
@@ -126,34 +120,24 @@
     "cordova-plugin-background-mode": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
-    "cordova-plugin-android-wifi-manager": {
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-smslog": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cz.blocshop.socketsforcordova": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
     "fr._46cl.focus": {
-      "PACKAGE_NAME": "com.opratel.opraTest"
-    },
-    "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },
   "dependent_plugins": {},
   "modules": [
-    {
-      "id": "cordova-plugin-smslog.SmsLog",
-      "file": "plugins/cordova-plugin-smslog/www/smslog.js",
-      "pluginId": "cordova-plugin-smslog",
-      "merges": [
-        "window.plugins.smsLog"
-      ]
-    },
-    {
-      "id": "cordova-plugin-smslog.SmsLogAndroid",
-      "file": "plugins/cordova-plugin-smslog/www/android/smslog.js",
-      "pluginId": "cordova-plugin-smslog",
-      "merges": [
-        "window.plugins.smsLog"
-      ]
-    },
     {
       "id": "com.darktalker.cordova.screenshot.screenshot",
       "file": "plugins/com.darktalker.cordova.screenshot/www/Screenshot.js",
@@ -163,11 +147,11 @@
       ]
     },
     {
-      "id": "cz.blocshop.socketsforcordova.Socket",
-      "file": "plugins/cz.blocshop.socketsforcordova/socket.js",
-      "pluginId": "cz.blocshop.socketsforcordova",
+      "id": "cordova-plugin-android-wifi-manager.WifiManager",
+      "file": "plugins/cordova-plugin-android-wifi-manager/www/index.js",
+      "pluginId": "cordova-plugin-android-wifi-manager",
       "clobbers": [
-        "window.Socket"
+        "cordova.plugins.WifiManager"
       ]
     },
     {
@@ -188,11 +172,36 @@
       ]
     },
     {
-      "id": "cordova-plugin-android-wifi-manager.WifiManager",
-      "file": "plugins/cordova-plugin-android-wifi-manager/www/index.js",
-      "pluginId": "cordova-plugin-android-wifi-manager",
+      "id": "cordova-plugin-inappbrowser.inappbrowser",
+      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+      "pluginId": "cordova-plugin-inappbrowser",
       "clobbers": [
-        "cordova.plugins.WifiManager"
+        "cordova.InAppBrowser.open",
+        "window.open"
+      ]
+    },
+    {
+      "id": "cordova-plugin-smslog.SmsLog",
+      "file": "plugins/cordova-plugin-smslog/www/smslog.js",
+      "pluginId": "cordova-plugin-smslog",
+      "merges": [
+        "window.plugins.smsLog"
+      ]
+    },
+    {
+      "id": "cordova-plugin-smslog.SmsLogAndroid",
+      "file": "plugins/cordova-plugin-smslog/www/android/smslog.js",
+      "pluginId": "cordova-plugin-smslog",
+      "merges": [
+        "window.plugins.smsLog"
+      ]
+    },
+    {
+      "id": "cz.blocshop.socketsforcordova.Socket",
+      "file": "plugins/cz.blocshop.socketsforcordova/socket.js",
+      "pluginId": "cz.blocshop.socketsforcordova",
+      "clobbers": [
+        "window.Socket"
       ]
     },
     {
@@ -202,26 +211,17 @@
       "clobbers": [
         "cordova.plugins.Focus"
       ]
-    },
-    {
-      "id": "cordova-plugin-inappbrowser.inappbrowser",
-      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-      "pluginId": "cordova-plugin-inappbrowser",
-      "clobbers": [
-        "cordova.InAppBrowser.open",
-        "window.open"
-      ]
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-smslog": "1.0.0",
     "com.darktalker.cordova.screenshot": "0.1.6",
-    "cz.blocshop.socketsforcordova": "1.1.0",
+    "cordova-plugin-android-wifi-manager": "1.0.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-background-mode": "0.7.2",
-    "cordova-plugin-android-wifi-manager": "1.0.0",
-    "fr._46cl.focus": "0.1.3",
-    "cordova-plugin-inappbrowser": "3.0.0"
+    "cordova-plugin-inappbrowser": "3.0.0",
+    "cordova-plugin-smslog": "1.0.0",
+    "cordova-plugin-whitelist": "1.3.3",
+    "cz.blocshop.socketsforcordova": "1.1.0",
+    "fr._46cl.focus": "0.1.3"
   }
 }

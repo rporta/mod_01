@@ -46,11 +46,11 @@ vueApp.create(touch);
 
 //set touch
 $(touch.$el).css("position", "fixed");
-// $(touch.$el).css("-webkit-transition", "all 1s ease");
-// $(touch.$el).css("-moz-transition", "all 1s ease");
-// $(touch.$el).css("-o-transition", "all 1s ease");
-// $(touch.$el).css("-ms-transition", "all 1s ease");
-// $(touch.$el).css("transition", "all 1s ease");
+$(touch.$el).css("-webkit-transition", "all 0.5s ease");
+$(touch.$el).css("-moz-transition", "all 0.5s ease");
+$(touch.$el).css("-o-transition", "all 0.5s ease");
+$(touch.$el).css("-ms-transition", "all 0.5s ease");
+$(touch.$el).css("transition", "all 0.5s ease");
 $(touch.$el).css("z-index", "9999");
 $(touch.$el).css("top", 0);
 $(touch.$el).css("left", 0);
@@ -64,4 +64,3 @@ $(button.$el).click(function() {
 });
 $(main.$el).css("display", "contents");
 
-touch.setShow(1);

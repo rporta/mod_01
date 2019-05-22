@@ -7,28 +7,28 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.opratel.opraTest"
-    },
-    "cordova-plugin-smslog": {
-      "PACKAGE_NAME": "com.opratel.opraTest"
-    },
     "com.darktalker.cordova.screenshot": {
-      "PACKAGE_NAME": "com.opratel.opraTest"
-    },
-    "cz.blocshop.socketsforcordova": {
-      "PACKAGE_NAME": "com.opratel.opraTest"
-    },
-    "cordova-plugin-background-mode": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
     "cordova-plugin-android-wifi-manager": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
-    "fr._46cl.focus": {
+    "cordova-plugin-background-mode": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     },
     "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-smslog": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "cz.blocshop.socketsforcordova": {
+      "PACKAGE_NAME": "com.opratel.opraTest"
+    },
+    "fr._46cl.focus": {
       "PACKAGE_NAME": "com.opratel.opraTest"
     }
   },

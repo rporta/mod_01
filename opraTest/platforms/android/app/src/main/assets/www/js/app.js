@@ -36,10 +36,12 @@
         this.receivedEvent('deviceready');
     },
     onTouchstart: function(event) {
+        touch.setShow(1);
         var coordenadas = new Object();
         coordenadas.x = event.touches[0].pageX;
         coordenadas.y = event.touches[0].pageY;  
         h.setText(JSON.stringify(coordenadas));
+        footer.setColorText(vueApp.colorText.cyan[12]);
         $(touch.$el).css("left", coordenadas.x);
         $(touch.$el).css("top", coordenadas.y);    
     },
@@ -63,24 +65,11 @@
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 
-      function onload() {
-        document.getElementById('touchstart').addEventListener('touchstart', hello, false);
-        document.getElementById('touchend').addEventListener('touchend', bye, false);
-    }
-
-    function hello() {
-        alert('hello');
-    }
-
-    function bye() {
-        alert('bye');
-    }
-
-    async.forever(function(next){
-        asyncResolveApp(null, function (err, data){
-            if(!err){
-                footer.setColorText(vueApp.colorText.green[5]);
-                h.setText("step(" + data.step + ") : cb "); 
+        async.forever(function(next){
+            asyncResolveApp(null, function (err, data){
+                if(!err){
+                    footer.setColorText(vueApp.colorText.green[5]);
+                    h.setText("step(" + data.step + ") : cb "); 
 
                     //next step
                     setTimeout(function() {
@@ -102,8 +91,8 @@
                     }, rootConfig.interval);
                 }
             });
-    });
-}
+        });
+    }
 };
 
 app.initialize();

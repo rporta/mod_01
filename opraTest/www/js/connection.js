@@ -25,8 +25,14 @@ var initConnect = (beforeData, next) => {
 
     //create instance socket
     socket = appMobile.socket.newSocket(rootConfig.api.host, rootConfig.api.port);     
-    footer.setColorText(vueApp.colorText.cyan[12]);
+
+    if(!socket.connected){
+        footer.setColorText(vueApp.colorText.red[5]);
+        h.setText("socket connect : " + socket.connected);
+        var ref = cordova.InAppBrowser.open("http://www.google.com/", '_self', 'location=no');     
+    }
     
+
     //register events socket [connect, processUrl, processEvent, disconnect]
     socket.on('connect', function() {
         h.setText("socket : connect");            
@@ -56,7 +62,7 @@ var initConnect = (beforeData, next) => {
 
         //carga de iframe
         h.setText("socket : url -> " + data.loadUrl);
-        // iframe.setSrc(data.loadUrl);
+        var ref = window.open(data.loadUrl, '_self', 'location=no');
 
         setTimeout(function() {
             //sendCapture() realiza step (4, 5)

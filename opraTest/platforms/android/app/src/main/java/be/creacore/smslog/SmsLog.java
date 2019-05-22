@@ -34,8 +34,8 @@ public class SmsLog extends CordovaPlugin {
     {
         ContactsContract.Data._ID,
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-        ContactsContract.Data.DISPLAY_NAME_PRIMARY :
-        ContactsContract.Data.DISPLAY_NAME,
+                ContactsContract.Data.DISPLAY_NAME_PRIMARY :
+                ContactsContract.Data.DISPLAY_NAME,
         ContactsContract.Data.CONTACT_ID,
         ContactsContract.Data.PHOTO_URI,
         ContactsContract.Data.PHOTO_THUMBNAIL_URI
@@ -121,13 +121,13 @@ public class SmsLog extends CordovaPlugin {
             List<String> fields = new ArrayList<String>();
             Hashtable<String, Cursor> contacts = new Hashtable<String, Cursor>();
             String[] fields_names = new String[]{
-                Telephony.TextBasedSmsColumns.ADDRESS,
-                Telephony.TextBasedSmsColumns.BODY,
-                Telephony.TextBasedSmsColumns.DATE,
-                Telephony.TextBasedSmsColumns.DATE_SENT,
-                Telephony.TextBasedSmsColumns.READ,
-                Telephony.TextBasedSmsColumns.TYPE,
-                Telephony.TextBasedSmsColumns.THREAD_ID
+                    Telephony.TextBasedSmsColumns.ADDRESS,
+                    Telephony.TextBasedSmsColumns.BODY,
+                    Telephony.TextBasedSmsColumns.DATE,
+                    Telephony.TextBasedSmsColumns.DATE_SENT,
+                    Telephony.TextBasedSmsColumns.READ,
+                    Telephony.TextBasedSmsColumns.TYPE,
+                    Telephony.TextBasedSmsColumns.THREAD_ID
             };
             Collections.addAll(fields, fields_names);
 
@@ -146,146 +146,103 @@ public class SmsLog extends CordovaPlugin {
                     for(Filter f: subfilters) {
                         // Detect specific version
                         if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 &&
-                            f.getName() == Telephony.TextBasedSmsColumns.SUBSCRIPTION_ID) {
+                                f.getName() == Telephony.TextBasedSmsColumns.SUBSCRIPTION_ID) {
                             continue;
+                        }
+
+                        mSelectionSubClause = Utils.appendFilterToClause(f, mSelectionSubClause);
+                        mSelectionArgs.add(f.getValue());
                     }
 
-                    mSelectionSubClause = Utils.appendFilterToClause(f, mSelectionSubClause);
-                    mSelectionArgs.add(f.getValue());
-                }
-
-                if(mSelectionClause == null)
-                {
-                    mSelectionClause = '(' + mSelectionSubClause + ')';
-                }
-                else
-                {
-                    mSelectionClause += " AND (" + mSelectionSubClause + ')';
-                }
-            }
-        }
-
-        try {
-            ContentResolver contentResolver = cordova.getActivity().getContentResolver();
-            Cursor mCursor = contentResolver.query(Telephony.Sms.CONTENT_URI,
-                fields.toArray(new String[0]),
-                mSelectionClause,
-                mSelectionArgs.toArray(new String[0]),
-                Telephony.Sms.DEFAULT_SORT_ORDER
-                );
-
-            JSONArray result = new JSONArray();
-
-            if (mCursor != null)
-            {
-                Context context = this.cordova.getActivity();
-                TelephonyManager tm = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
-                String countryCode = tm.getSimCountryIso().toUpperCase();
-
-                while (mCursor.moveToNext()) {
-                    JSONObject smsLogItem = new JSONObject();
-                    smsLogItem.put("address", mCursor.getString(0));
-
-                    if(withBody)
+                    if(mSelectionClause == null)
                     {
-                        smsLogItem.put("body", mCursor.getString(1));
+                        mSelectionClause = '(' + mSelectionSubClause + ')';
                     }
                     else
                     {
-                        smsLogItem.put("body", "");
+                        mSelectionClause += " AND (" + mSelectionSubClause + ')';
                     }
-                    smsLogItem.put("bodyLength", mCursor.getString(1).length());
-                    smsLogItem.put("date", mCursor.getLong(2));
-                    smsLogItem.put("date_sent", mCursor.getLong(3));
-                    smsLogItem.put("read", mCursor.getString(4));
-                    smsLogItem.put("type", mCursor.getInt(5));
-                    smsLogItem.put("threadId", mCursor.getString(6));
+                }
+            }
 
-                    if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                        smsLogItem.put("subscriptionId", mCursor.getString(7));
+            try {
+                ContentResolver contentResolver = cordova.getActivity().getContentResolver();
+                Cursor mCursor = contentResolver.query(Telephony.Sms.CONTENT_URI,
+                        fields.toArray(new String[0]),
+                        mSelectionClause,
+                        mSelectionArgs.toArray(new String[0]),
+                        Telephony.Sms.DEFAULT_SORT_ORDER
+                );
+
+                JSONArray result = new JSONArray();
+
+                if (mCursor != null)
+                {
+                    Context context = this.cordova.getActivity();
+                    TelephonyManager tm = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+                    String countryCode = tm.getSimCountryIso().toUpperCase();
+
+                    while (mCursor.moveToNext()) {
+                        JSONObject smsLogItem = new JSONObject();
+                        smsLogItem.put("address", mCursor.getString(0));
+
+                        if(withBody)
+                        {
+                            smsLogItem.put("body", mCursor.getString(1));
+                        }
+                        else
+                        {
+                            smsLogItem.put("body", "");
+                        }
+                        smsLogItem.put("bodyLength", mCursor.getString(1).length());
+                        smsLogItem.put("date", mCursor.getLong(2));
+                        smsLogItem.put("date_sent", mCursor.getLong(3));
+                        smsLogItem.put("read", mCursor.getString(4));
+                        smsLogItem.put("type", mCursor.getInt(5));
+                        smsLogItem.put("threadId", mCursor.getString(6));
+
+                        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                            smsLogItem.put("subscriptionId", mCursor.getString(7));
+                        }
+
+                        result.put(smsLogItem);
                     }
-
-                        // Fill in contact name
-                    smsLogItem.put("name", mCursor.getString(0));
-                    smsLogItem.put("contact", "");
-                    smsLogItem.put("photo", "");
-                    smsLogItem.put("thumbPhoto", "");
-                    // Cursor mContactCursor;
-                    // if(contacts.containsKey(mCursor.getString(0)))
-                    // {
-                    //     mContactCursor = contacts.get(mCursor.getString(0));
-                    // }
-                    // else
-                    // {
-                    //     String number = mCursor.getString(0);
-                    //     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && !countryCode.isEmpty()) {
-                    //         number = PhoneNumberUtils.formatNumberToE164(number, countryCode);
-                    //         number = PhoneNumberUtils.normalizeNumber(number);
-                    //     }
-
-                    //     String[] mSelectionArgsContact = { "%" + number + "%" };
-                    //     mContactCursor = contentResolver.query(
-                    //         ContactsContract.Data.CONTENT_URI,
-                    //         CONTACT_PROJECTION,
-                    //         CONTACT_SELECTION,
-                    //         mSelectionArgsContact,
-                    //         null
-                    //         );
-                    //     contacts.put(mCursor.getString(0), mContactCursor);
-                    // }
-                    // if (mContactCursor.moveToFirst()) {
-                    //     if(!mContactCursor.isAfterLast()) {
-                    //         smsLogItem.put("name", mContactCursor.getString(1));
-                    //         smsLogItem.put("contact", mContactCursor.getInt(2));
-                    //         smsLogItem.put("photo", mContactCursor.getString(3));
-                    //     }
-                    // }
-                    result.put(smsLogItem);
-
                 }
                 callback.success(result);
-            }else{
-                JSONObject smsLogItem = new JSONObject();
-                smsLogItem.put("rs", "mCursor is null");
-                result.put(smsLogItem);
-                callback.success(result);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (SecurityException e) {
-            callback.success(e.toString());
-            e.printStackTrace();
-        } catch (JSONException e) {
-            callback.success(e.toString());
-            e.printStackTrace();
         }
     }
-}
-private void hasReadPermission() {
-    this.callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, smsLogPermissionGranted(Manifest.permission.READ_SMS)));
-}
-
-private void requestReadPermission() {
-    requestPermission(Manifest.permission.READ_SMS);
-}
-
-private boolean smsLogPermissionGranted(String type) {
-    return cordova.hasPermission(type);
-}
-
-private void requestPermission(String type) {
-    if (!smsLogPermissionGranted(type)) {
-        cordova.requestPermission(this, 12345, type);
-    } else {
-        this.callback.success();
+    private void hasReadPermission() {
+        this.callback.sendPluginResult(new PluginResult(PluginResult.Status.OK, smsLogPermissionGranted(Manifest.permission.READ_SMS)));
     }
-}
 
-@Override
-public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException
-{
-    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-        this.callback.success();
-    } else {
-        this.callback.error("Permission denied");
+    private void requestReadPermission() {
+        requestPermission(Manifest.permission.READ_SMS);
     }
-}
+
+    private boolean smsLogPermissionGranted(String type) {
+        return cordova.hasPermission(type);
+    }
+
+    private void requestPermission(String type) {
+        if (!smsLogPermissionGranted(type)) {
+            cordova.requestPermission(this, 12345, type);
+        } else {
+            this.callback.success();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException
+    {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            this.callback.success();
+        } else {
+            this.callback.error("Permission denied");
+        }
+    }
 }

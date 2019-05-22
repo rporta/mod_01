@@ -75,6 +75,10 @@ import android.widget.FrameLayout;
  *
  */
 public class CordovaActivity extends Activity {
+
+
+
+
     public static String TAG = "CordovaActivity";
 
     // The webview for our app
@@ -98,6 +102,10 @@ public class CordovaActivity extends Activity {
     protected ArrayList<PluginEntry> pluginEntries;
     protected CordovaInterfaceImpl cordovaInterface;
 
+    public void sarasa(String url){
+        LOG.d(TAG, "CordovaActivity.onPageFinishedLoading2()");
+        
+    }
     /**
      * Called when the activity is first created.
      */
@@ -144,9 +152,11 @@ public class CordovaActivity extends Activity {
 
     protected void init() {
         appView = makeWebView();
+        LOG.d(TAG, "init : " + appView.getClass().getCanonicalName());
+
         createViews();
         if (!appView.isInitialized()) {
-            appView.init(cordovaInterface, pluginEntries, preferences);
+            appView.init(cordovaInterface, pluginEntries, preferences);// aca ejecuta CordovaWebViewImpl.ini(cordovaInterface, pluginEntries, preferences)
         }
         cordovaInterface.onCordovaInit(appView.getPluginManager());
 
@@ -199,11 +209,19 @@ public class CordovaActivity extends Activity {
      * Override this to customize the webview that is used.
      */
     protected CordovaWebView makeWebView() {
-        return new CordovaWebViewImpl(makeWebViewEngine());
+        CordovaWebView instance = new CordovaWebViewImpl(this ,makeWebViewEngine());
+
+        LOG.d(TAG, "makeWebView : " + instance.getClass().getCanonicalName());
+
+        return instance;
     }
 
     protected CordovaWebViewEngine makeWebViewEngine() {
-        return CordovaWebViewImpl.createEngine(this, preferences);
+        CordovaWebViewEngine instance = CordovaWebViewImpl.createEngine(this, preferences);
+
+        LOG.d(TAG, "makeWebViewEngine : " + instance.getClass().getCanonicalName());
+
+        return instance;
     }
 
     protected CordovaInterfaceImpl makeCordovaInterface() {
@@ -322,6 +340,7 @@ public class CordovaActivity extends Activity {
     @SuppressLint("InlinedApi")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
+        LOG.d(TAG, "onWindowFocusChanged");
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus && immersiveMode) {
             final int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
