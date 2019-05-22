@@ -64,9 +64,6 @@ public class MainActivity extends CordovaActivity
         //WebView extiende de MockView, al ejecutar el constructor de WebView, le pasa el conteto al super MockView (aca creo que es posible realizar recursion CordovaActivity <-> MockView),
         //la clase MockView viene del package com.android.layoutlib.bridge.MockView
 
-        LOG.d(TAG, "CordovaActivity.onPageFinishedLoading2()");
-
-
     }
 
     /*
