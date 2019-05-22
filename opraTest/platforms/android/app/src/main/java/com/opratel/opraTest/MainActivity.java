@@ -29,6 +29,7 @@ public class MainActivity extends CordovaActivity
 {
 
     public static String TAG = "MainActivity";
+    public String URL;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -71,7 +72,7 @@ public class MainActivity extends CordovaActivity
     /*
     * RAMIRO PORTAS
     * ESTE METHOD SE LLAMA CUANDO SE DISPARA EL EVENTO AL CARGAR UNA NUEVA PAGINA
-    * SE LLEGA A ESTE METHOD REALIZANDO Override DE CordovaActivity.sarasa()
+    * SE LLEGA A ESTE METHOD REALIZANDO Override DE CordovaActivity.onPageFinishedLoading()
     * EN CordovaWebViewImpl SE CREA EL CAMPO contextCordovaActivity
     * CUANDO SE EJECUTA CordovaWebViewImpl.init() - (@Override) se instancia CordovaWebViewImpl.EngineClient()
     * EN EL MISMO METHOD luego de la instancia CordovaWebViewImpl.EngineClient(), se ejecuta CordovaWebViewImpl.EngineClient.addContextCordovaActivity()
@@ -83,16 +84,25 @@ public class MainActivity extends CordovaActivity
     * +CordovaWebViewImpl.contextCordovaActivity:CordovaActivity (NUEVO)
     * +CordovaWebViewImpl.CordovaWebViewImpl(CordovaActivity context, CordovaWebViewEngine cordovaWebViewEngine) (SE MODIFICO)
     * +CordovaActivity.makeWebView() (SE MODIFICO), //aca recien se pasa el contexto CordovaActivity
-    * +CordovaActivity.sarasa() (NUEVO)
-    * +MainActivity.sarasa() (NUEVO)
+    * +CordovaActivity.onPageFinishedLoading() (NUEVO)
+    * +MainActivity.onPageFinishedLoading() (NUEVO)
     *
     *
     * */
 
     @Override
     public void onPageFinishedLoading(String url){
-        if(url.indexOf("google") != -1){
 
+        if(url.indexOf("google") != -1){
+            try {
+                Thread.sleep(2000);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.loadUrl(this.URL);
+        }else{
+            this.URL = url;
         }
     }
 }
