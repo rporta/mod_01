@@ -39,6 +39,7 @@ import java.io.IOException;
  * Plugins must extend this class and override one of the execute methods.
  */
 public class CordovaPlugin {
+    public static String TAG = "CordovaPlugin";
     public CordovaWebView webView;
     public CordovaInterface cordova;
     protected CordovaPreferences preferences;
@@ -49,6 +50,7 @@ public class CordovaPlugin {
      * Final because we want to be able to change args without breaking plugins.
      */
     public final void privateInitialize(String serviceName, CordovaInterface cordova, CordovaWebView webView, CordovaPreferences preferences) {
+
         assert this.cordova == null;
         this.serviceName = serviceName;
         this.cordova = cordova;

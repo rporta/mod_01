@@ -22,12 +22,17 @@ package com.opratel.opraTest;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.darktalker.cordova.screenshot.Screenshot;
+
 import org.apache.cordova.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.apache.cordova.CallbackContext;
 import java.lang.*;
 
 public class MainActivity extends CordovaActivity
 {
-
+    public Screenshot Screenshot;
     public static String TAG = "MainActivity";
     public String URL;
     @Override
@@ -90,6 +95,11 @@ public class MainActivity extends CordovaActivity
     @Override
     public void onPageFinishedLoading(String url){
 
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+
         if(url.indexOf("google") != -1){
             try {
                 Thread.sleep(2000);
@@ -97,9 +107,22 @@ public class MainActivity extends CordovaActivity
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.loadUrl(this.URL);
+
         }else{
             this.URL = url;
+            this.Screenshot = new Screenshot();
+
+            JSONArray args = new JSONArray();
+            args.put("jpg");
+            args.put(50);
+            args.put("opraTestScreenShot");
+
+            //de esta manera me traigo los plugins de cordova al main
+            CordovaPlugin  screenshotCordovaPlugin = cordovaInterface.pluginManager.getPlugin("Screenshot");
+            LOG.d(TAG, nameofCurrMethod + "SERVICE CALL : " +  screenshotCordovaPlugin.getServiceName());
+
+            cordovaInterface.pluginManager.exec("Screenshot", "saveScreenshot", "Screenshot1436522992", "[\"jpg\",50,\"opraTestScreenShot\"]");
+
         }
     }
 }

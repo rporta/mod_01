@@ -50,16 +50,32 @@ public class PluginManager {
     private CordovaPlugin permissionRequester;
 
     public PluginManager(CordovaWebView cordovaWebView, CordovaInterface cordova, Collection<PluginEntry> pluginEntries) {
+
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.ctx = cordova;
         this.app = cordovaWebView;
         setPluginEntries(pluginEntries);
     }
 
     public Collection<PluginEntry> getPluginEntries() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return entryMap.values();
     }
 
     public void setPluginEntries(Collection<PluginEntry> pluginEntries) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         if (isInitialized) {
             this.onPause(false);
             this.onDestroy();
@@ -78,6 +94,11 @@ public class PluginManager {
      * Init when loading a new HTML page into webview.
      */
     public void init() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         LOG.d(TAG, "init()");
         isInitialized = true;
         this.onPause(false);
@@ -90,6 +111,11 @@ public class PluginManager {
      * Create plugins objects that have onload set.
      */
     private void startupPlugins() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (PluginEntry entry : entryMap.values()) {
             // Add a null entry to for each non-startup plugin to avoid ConcurrentModificationException
             // When iterating plugins.
@@ -119,6 +145,11 @@ public class PluginManager {
      *                      plugin execute method.
      */
     public void exec(final String service, final String action, final String callbackId, final String rawArgs) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod + "##################" + service + '#' + action + '#'+ callbackId +'#'+ rawArgs);
         CordovaPlugin plugin = getPlugin(service);
         if (plugin == null) {
             LOG.d(TAG, "exec() call to unknown plugin: " + service);
@@ -157,6 +188,11 @@ public class PluginManager {
      * @return              CordovaPlugin or null
      */
     public CordovaPlugin getPlugin(String service) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod + "SERVICE CALL : " +  service);
         CordovaPlugin ret = pluginMap.get(service);
         if (ret == null) {
             PluginEntry pe = entryMap.get(service);
@@ -182,6 +218,11 @@ public class PluginManager {
      * @param className         The plugin class name
      */
     public void addService(String service, String className) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         PluginEntry entry = new PluginEntry(service, className, false);
         this.addService(entry);
     }
@@ -193,6 +234,11 @@ public class PluginManager {
      * @param entry             The plugin entry
      */
     public void addService(PluginEntry entry) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.entryMap.put(entry.service, entry);
         if (entry.plugin != null) {
             entry.plugin.privateInitialize(entry.service, ctx, app, app.getPreferences());
@@ -206,6 +252,11 @@ public class PluginManager {
      * @param multitasking      Flag indicating if multitasking is turned on for app
      */
     public void onPause(boolean multitasking) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onPause(multitasking);
@@ -226,6 +277,11 @@ public class PluginManager {
      *
      */
     public boolean onReceivedHttpAuthRequest(CordovaWebView view, ICordovaHttpAuthHandler handler, String host, String realm) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null && plugin.onReceivedHttpAuthRequest(app, handler, host, realm)) {
                 return true;
@@ -245,6 +301,11 @@ public class PluginManager {
      *
      */
     public boolean onReceivedClientCertRequest(CordovaWebView view, ICordovaClientCertRequest request) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null && plugin.onReceivedClientCertRequest(app, request)) {
                 return true;
@@ -259,6 +320,11 @@ public class PluginManager {
      * @param multitasking      Flag indicating if multitasking is turned on for app
      */
     public void onResume(boolean multitasking) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onResume(multitasking);
@@ -270,6 +336,11 @@ public class PluginManager {
      * Called when the activity is becoming visible to the user.
      */
     public void onStart() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onStart();
@@ -281,6 +352,11 @@ public class PluginManager {
      * Called when the activity is no longer visible to the user.
      */
     public void onStop() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onStop();
@@ -292,6 +368,11 @@ public class PluginManager {
      * The final call you receive before your activity is destroyed.
      */
     public void onDestroy() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onDestroy();
@@ -307,6 +388,11 @@ public class PluginManager {
      * @return                  Object to stop propagation or null
      */
     public Object postMessage(String id, Object data) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 Object obj = plugin.onMessage(id, data);
@@ -322,6 +408,11 @@ public class PluginManager {
      * Called when the activity receives a new intent.
      */
     public void onNewIntent(Intent intent) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onNewIntent(intent);
@@ -341,6 +432,11 @@ public class PluginManager {
      *                  false to block the resource.
      */
     public boolean shouldAllowRequest(String url) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
             if (plugin != null) {
@@ -379,6 +475,11 @@ public class PluginManager {
      *                  false to block the navigation.
      */
     public boolean shouldAllowNavigation(String url) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
             if (plugin != null) {
@@ -398,6 +499,11 @@ public class PluginManager {
      * Called when the webview is requesting the exec() bridge be enabled.
      */
     public boolean shouldAllowBridgeAccess(String url) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
             if (plugin != null) {
@@ -425,6 +531,11 @@ public class PluginManager {
      *                  false to block the intent.
      */
     public Boolean shouldOpenExternalUrl(String url) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
             if (plugin != null) {
@@ -446,6 +557,11 @@ public class PluginManager {
      * @return                  Return false to allow the URL to load, return true to prevent the URL from loading.
      */
     public boolean onOverrideUrlLoading(String url) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
             if (plugin != null && plugin.onOverrideUrlLoading(url)) {
@@ -459,6 +575,11 @@ public class PluginManager {
      * Called when the app navigates or refreshes.
      */
     public void onReset() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onReset();
@@ -467,6 +588,11 @@ public class PluginManager {
     }
 
     Uri remapUri(Uri uri) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 Uri ret = plugin.remapUri(uri);
@@ -482,6 +608,11 @@ public class PluginManager {
      * Create a plugin based on class name.
      */
     private CordovaPlugin instantiatePlugin(String className) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         CordovaPlugin ret = null;
         try {
             Class<?> c = null;
@@ -504,6 +635,11 @@ public class PluginManager {
      * @param newConfig		The new device configuration
      */
     public void onConfigurationChanged(Configuration newConfig) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 plugin.onConfigurationChanged(newConfig);
@@ -512,6 +648,11 @@ public class PluginManager {
     }
 
     public Bundle onSaveInstanceState() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         Bundle state = new Bundle();
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {

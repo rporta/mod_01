@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import android.util.Base64;
 
 public class PluginResult {
+    public static String TAG = "PluginResult";
     private final int status;
     private final int messageType;
     private boolean keepCallback = false;
@@ -34,40 +35,71 @@ public class PluginResult {
     private List<PluginResult> multipartMessages;
 
     public PluginResult(Status status) {
+
         this(status, PluginResult.StatusMessages[status.ordinal()]);
     }
 
     public PluginResult(Status status, String message) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = message == null ? MESSAGE_TYPE_NULL : MESSAGE_TYPE_STRING;
         this.strMessage = message;
     }
 
     public PluginResult(Status status, JSONArray message) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = MESSAGE_TYPE_JSON;
         encodedMessage = message.toString();
     }
 
     public PluginResult(Status status, JSONObject message) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = MESSAGE_TYPE_JSON;
         encodedMessage = message.toString();
     }
 
     public PluginResult(Status status, int i) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = MESSAGE_TYPE_NUMBER;
         this.encodedMessage = ""+i;
     }
 
     public PluginResult(Status status, float f) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = MESSAGE_TYPE_NUMBER;
         this.encodedMessage = ""+f;
     }
 
     public PluginResult(Status status, boolean b) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = MESSAGE_TYPE_BOOLEAN;
         this.encodedMessage = Boolean.toString(b);
@@ -78,6 +110,11 @@ public class PluginResult {
     }
 
     public PluginResult(Status status, byte[] data, boolean binaryString) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = binaryString ? MESSAGE_TYPE_BINARYSTRING : MESSAGE_TYPE_ARRAYBUFFER;
         this.encodedMessage = Base64.encodeToString(data, Base64.NO_WRAP);
@@ -85,24 +122,49 @@ public class PluginResult {
     
     // The keepCallback and status of multipartMessages are ignored.
     public PluginResult(Status status, List<PluginResult> multipartMessages) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.status = status.ordinal();
         this.messageType = MESSAGE_TYPE_MULTIPART;
         this.multipartMessages = multipartMessages;
     }
 
     public void setKeepCallback(boolean b) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.keepCallback = b;
     }
 
     public int getStatus() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return status;
     }
 
     public int getMessageType() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return messageType;
     }
 
     public String getMessage() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         if (encodedMessage == null) {
             encodedMessage = JSONObject.quote(strMessage);
         }
@@ -110,10 +172,20 @@ public class PluginResult {
     }
 
     public int getMultipartMessagesSize() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return multipartMessages.size();
     }
 
     public PluginResult getMultipartMessage(int index) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return multipartMessages.get(index);
     }
 
@@ -122,20 +194,40 @@ public class PluginResult {
      * Otherwise, returns null.
      */
     public String getStrMessage() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return strMessage;
     }
 
     public boolean getKeepCallback() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return this.keepCallback;
     }
 
     @Deprecated // Use sendPluginResult instead of sendJavascript.
     public String getJSONString() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return "{\"status\":" + this.status + ",\"message\":" + this.getMessage() + ",\"keepCallback\":" + this.keepCallback + "}";
     }
 
     @Deprecated // Use sendPluginResult instead of sendJavascript.
     public String toCallbackString(String callbackId) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         // If no result to be sent and keeping callback, then no need to sent back to JavaScript
         if ((status == PluginResult.Status.NO_RESULT.ordinal()) && keepCallback) {
         	return null;
@@ -151,11 +243,21 @@ public class PluginResult {
 
     @Deprecated // Use sendPluginResult instead of sendJavascript.
     public String toSuccessCallbackString(String callbackId) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return "cordova.callbackSuccess('"+callbackId+"',"+this.getJSONString()+");";
     }
 
     @Deprecated // Use sendPluginResult instead of sendJavascript.
     public String toErrorCallbackString(String callbackId) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         return "cordova.callbackError('"+callbackId+"', " + this.getJSONString()+ ");";
     }
 
@@ -178,6 +280,7 @@ public class PluginResult {
         "Instantiation error",
         "Malformed url",
         "IO error",
+
         "Invalid action",
         "JSON error",
         "Error"

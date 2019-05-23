@@ -24,7 +24,7 @@ import org.apache.cordova.CordovaPlugin;
  * This class represents a service entry object.
  */
 public final class PluginEntry {
-
+    public static String TAG = "PluginEntry";
     /**
      * The name of the service that this plugin implements
      */
@@ -62,6 +62,11 @@ public final class PluginEntry {
     }
 
     private PluginEntry(String service, String pluginClass, boolean onload, CordovaPlugin plugin) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod);
         this.service = service;
         this.pluginClass = pluginClass;
         this.onload = onload;

@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ import java.io.IOException;
 
 
 public class Screenshot extends CordovaPlugin {
+    public static String TAG = "Screenshot";
     private CallbackContext mCallbackContext;
     private String mAction;
     private JSONArray mArgs;
@@ -49,6 +51,7 @@ public class Screenshot extends CordovaPlugin {
 
     @Override
     public Object onMessage(String id, Object data) {
+        LOG.d(TAG, "onMessage(String id, Object data)");
         if (id.equals("onGotXWalkBitmap")) {
             Bitmap bitmap = (Bitmap) data;
             if (bitmap != null) {
@@ -63,6 +66,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     private Bitmap getBitmap() {
+        LOG.d(TAG, "getBitmap()");
         Bitmap bitmap = null;
 
         boolean isCrosswalk = false;
@@ -85,6 +89,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     private void scanPhoto(String imageFileName) {
+        LOG.d(TAG, "scanPhoto(String imageFileName)");
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(imageFileName);
         Uri contentUri = Uri.fromFile(f);
@@ -93,6 +98,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     private void saveScreenshot(Bitmap bitmap, String format, String fileName, Integer quality) {
+        LOG.d(TAG, "saveScreenshot(Bitmap , "+ format +", " + fileName + ", " + String.valueOf(quality));
         try {
             File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
             if (!folder.exists()) {
@@ -124,6 +130,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     private void getScreenshotAsURI(Bitmap bitmap, int quality) {
+        LOG.d(TAG, "getScreenshotAsURI(Bitmap bitmap, int quality)");
         try {
             ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
 
@@ -154,6 +161,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     public void saveScreenshot() throws JSONException{
+        LOG.d(TAG, "saveScreenshot()");
         mFormat = (String) mArgs.get(0);
         mQuality = (Integer) mArgs.get(1);
         mFileName = (String) mArgs.get(2);
@@ -175,6 +183,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     public void getScreenshotAsURI() throws JSONException{
+        LOG.d(TAG, "getScreenshotAsURI()");
         mQuality = (Integer) mArgs.get(0);
 
         super.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -189,6 +198,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
      public void getScreenshotAsURISync() throws JSONException{
+         LOG.d(TAG, "getScreenshotAsURISync()");
         mQuality = (Integer) mArgs.get(0);
         
         Runnable r = new Runnable(){
@@ -214,6 +224,15 @@ public class Screenshot extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+
+        String logJSONArray = "";
+
+        for (int i = 0; i < args.length(); i++) {
+            logJSONArray += String.valueOf(args.get(i)) + ", ";
+        }
+
+        LOG.d(TAG, "execute(action : " +  action + ", args : ("+ logJSONArray +"))");
+
         // starting on ICS, some WebView methods
         // can only be called on UI threads
         mCallbackContext = callbackContext;
@@ -241,6 +260,16 @@ public class Screenshot extends CordovaPlugin {
     public void onRequestPermissionResult(int requestCode, String[] permissions,
                                           int[] grantResults) throws JSONException
     {
+        String logPermissions = "";
+        String logGrantResults = "";
+        for( String c : permissions){
+            logPermissions += c + ',';
+        }
+        for( int x : grantResults){
+            logGrantResults += String.valueOf(x) + ',';
+        }
+
+        LOG.d(TAG, "onRequestPermissionResult(requestCode : " +  String.valueOf(requestCode) + "logPermissions : (" + logPermissions + "), logGrantResults : (" + logGrantResults + "))");
         for(int r:grantResults)
         {
             if(r == PackageManager.PERMISSION_DENIED)

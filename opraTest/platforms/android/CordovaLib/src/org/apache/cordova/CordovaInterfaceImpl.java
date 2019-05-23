@@ -41,7 +41,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     private static final String TAG = "CordovaInterfaceImpl";
     protected Activity activity;
     protected ExecutorService threadPool;
-    protected PluginManager pluginManager;
+    public PluginManager pluginManager;
 
     protected ActivityResultHolder savedResult;
     protected CallbackMap permissionResultCallbacks;
