@@ -69,6 +69,10 @@ public class SystemWebChromeClient extends WebChromeClient {
     private View mCustomView;
 
     public SystemWebChromeClient(SystemWebViewEngine parentEngine) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod + "class parentEngine: " + parentEngine.getClass().getName());
         this.parentEngine = parentEngine;
         appContext = parentEngine.webView.getContext();
         dialogsHelper = new CordovaDialogsHelper(appContext);
@@ -79,6 +83,10 @@ public class SystemWebChromeClient extends WebChromeClient {
      */
     @Override
     public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         dialogsHelper.showAlert(message, new CordovaDialogsHelper.Result() {
             @Override public void gotResult(boolean success, String value) {
                 if (success) {
@@ -96,9 +104,17 @@ public class SystemWebChromeClient extends WebChromeClient {
      */
     @Override
     public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         dialogsHelper.showConfirm(message, new CordovaDialogsHelper.Result() {
             @Override
             public void gotResult(boolean success, String value) {
+                String nameofCurrMethod = new Throwable()
+                        .getStackTrace()[0]
+                        .getMethodName();
+                LOG.d(LOG_TAG, nameofCurrMethod );
                 if (success) {
                     result.confirm();
                 } else {
@@ -119,6 +135,10 @@ public class SystemWebChromeClient extends WebChromeClient {
      */
     @Override
     public boolean onJsPrompt(WebView view, String origin, String message, String defaultValue, final JsPromptResult result) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod + "origin :" + origin + ",message :" + message + ",defaultValue :" + defaultValue);
         // Unlike the @JavascriptInterface bridge, this method is always called on the UI thread.
         String handledRet = parentEngine.bridge.promptOnJsPrompt(origin, message, defaultValue);
         if (handledRet != null) {
@@ -127,6 +147,10 @@ public class SystemWebChromeClient extends WebChromeClient {
             dialogsHelper.showPrompt(message, defaultValue, new CordovaDialogsHelper.Result() {
                 @Override
                 public void gotResult(boolean success, String value) {
+                    String nameofCurrMethod = new Throwable()
+                            .getStackTrace()[0]
+                            .getMethodName();
+                    LOG.d(LOG_TAG, nameofCurrMethod );
                     if (success) {
                         result.confirm(value);
                     } else {
@@ -146,6 +170,10 @@ public class SystemWebChromeClient extends WebChromeClient {
     public void onExceededDatabaseQuota(String url, String databaseIdentifier, long currentQuota, long estimatedSize,
             long totalUsedQuota, WebStorage.QuotaUpdater quotaUpdater)
     {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         LOG.d(LOG_TAG, "onExceededDatabaseQuota estimatedSize: %d  currentQuota: %d  totalUsedQuota: %d", estimatedSize, currentQuota, totalUsedQuota);
         quotaUpdater.updateQuota(MAX_QUOTA);
     }
@@ -153,6 +181,10 @@ public class SystemWebChromeClient extends WebChromeClient {
     @Override
     public boolean onConsoleMessage(ConsoleMessage consoleMessage)
     {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (consoleMessage.message() != null)
             LOG.d(LOG_TAG, "%s: Line %d : %s" , consoleMessage.sourceId() , consoleMessage.lineNumber(), consoleMessage.message());
          return super.onConsoleMessage(consoleMessage);
@@ -168,6 +200,10 @@ public class SystemWebChromeClient extends WebChromeClient {
      * @param callback
      */
     public void onGeolocationPermissionsShowPrompt(String origin, Callback callback) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         super.onGeolocationPermissionsShowPrompt(origin, callback);
         callback.invoke(origin, true, false);
         //Get the plugin, it should be loaded
@@ -183,12 +219,20 @@ public class SystemWebChromeClient extends WebChromeClient {
     @Override
     @SuppressWarnings("deprecation")
     public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         parentEngine.getCordovaWebView().showCustomView(view, callback);
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void onHideCustomView() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         parentEngine.getCordovaWebView().hideCustomView();
     }
 
@@ -199,7 +243,10 @@ public class SystemWebChromeClient extends WebChromeClient {
      * @return View The progress view.
      */
     public View getVideoLoadingProgressView() {
-
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (mVideoProgressView == null) {
             // Create a new Loading view programmatically.
 
@@ -225,15 +272,27 @@ public class SystemWebChromeClient extends WebChromeClient {
     // openFileChooser() is for pre KitKat and in KitKat mr1 (it's known broken in KitKat).
     // For Lollipop, we use onShowFileChooser().
     public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         this.openFileChooser(uploadMsg, "*/*");
     }
 
     public void openFileChooser( ValueCallback<Uri> uploadMsg, String acceptType ) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         this.openFileChooser(uploadMsg, acceptType, null);
     }
 
     public void openFileChooser(final ValueCallback<Uri> uploadMsg, String acceptType, String capture)
     {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
@@ -250,6 +309,10 @@ public class SystemWebChromeClient extends WebChromeClient {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onShowFileChooser(WebView webView, final ValueCallback<Uri[]> filePathsCallback, final WebChromeClient.FileChooserParams fileChooserParams) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         Intent intent = fileChooserParams.createIntent();
         try {
             parentEngine.cordova.startActivityForResult(new CordovaPlugin() {
@@ -270,11 +333,19 @@ public class SystemWebChromeClient extends WebChromeClient {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onPermissionRequest(final PermissionRequest request) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         LOG.d(LOG_TAG, "onPermissionRequest: " + Arrays.toString(request.getResources()));
         request.grant(request.getResources());
     }
 
     public void destroyLastDialog(){
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         dialogsHelper.destroyLastDialog();
     }
 }

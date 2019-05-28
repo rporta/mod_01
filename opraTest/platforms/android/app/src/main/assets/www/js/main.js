@@ -1,11 +1,10 @@
-
 //aca trabajo con la instancia
 //example:
 vueApp.setColor(vueApp.color.bwt[0]);
 var preloaderFull = vueApp.newComponent('c-preloader-circle-full').setSectionColor(vueApp.color.bwt[0]);
 
 setTimeout(() => {
-	preloaderFull.setShow(false);
+    preloaderFull.setShow(false);
 }, 1000);
 
 vueApp.create(preloaderFull);
@@ -58,9 +57,8 @@ $(touch.$el).css("left", 0);
 //events  
 var buttonClicks = 0;
 $(button.$el).click(function() {
-	buttonClicks++;
-	modal.setText("OPEN:MODAL : click (" + buttonClicks + ")");
-	modal.open();
+    buttonClicks++;
+    modal.setText("OPEN:MODAL : click (" + buttonClicks + ")");
+    modal.open();
 });
 $(main.$el).css("display", "contents");
-

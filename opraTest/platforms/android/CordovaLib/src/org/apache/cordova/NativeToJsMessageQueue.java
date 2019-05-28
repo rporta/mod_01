@@ -16,8 +16,8 @@
        specific language governing permissions and limitations
        under the License.
 */
-package org.apache.cordova;
 
+package org.apache.cordova;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -64,15 +64,26 @@ public class NativeToJsMessageQueue {
      */
     private BridgeMode activeBridgeMode;
 
-    public void addBridgeMode(BridgeMode bridgeMode) {
+    public void addBridgeMode(BridgeMode bridgeMode) {        String nameofCurrMethod = new Throwable()
+            .getStackTrace()[0]
+            .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         bridgeModes.add(bridgeMode);
     }
 
     public boolean isBridgeEnabled() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         return activeBridgeMode != null;
     }
 
     public boolean isEmpty() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         return queue.isEmpty();
     }
 
@@ -103,6 +114,10 @@ public class NativeToJsMessageQueue {
      * Clears all messages and resets to the default bridge mode.
      */
     public void reset() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         synchronized (this) {
             queue.clear();
             setBridgeMode(-1);
@@ -110,12 +125,20 @@ public class NativeToJsMessageQueue {
     }
 
     private int calculatePackedMessageLength(JsMessage message) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         int messageLen = message.calculateEncodedLength();
         String messageLenStr = String.valueOf(messageLen);
         return messageLenStr.length() + messageLen + 1;
     }
 
     private void packMessage(JsMessage message, StringBuilder sb) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         int len = message.calculateEncodedLength();
         sb.append(len)
           .append(' ');
@@ -128,6 +151,10 @@ public class NativeToJsMessageQueue {
      * Returns null if the queue is empty.
      */
     public String popAndEncode(boolean fromOnlineEvent) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         synchronized (this) {
             if (activeBridgeMode == null) {
                 return null;
@@ -166,6 +193,10 @@ public class NativeToJsMessageQueue {
      * Same as popAndEncode(), except encodes in a form that can be executed as JS.
      */
     public String popAndEncodeAsJs() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         synchronized (this) {
             int length = queue.size();
             if (length == 0) {
@@ -210,6 +241,10 @@ public class NativeToJsMessageQueue {
      * Add a JavaScript statement to the list.
      */
     public void addJavaScript(String statement) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         enqueueMessage(new JsMessage(statement));
     }
 
@@ -217,6 +252,10 @@ public class NativeToJsMessageQueue {
      * Add a JavaScript statement to the list.
      */
     public void addPluginResult(PluginResult result, String callbackId) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (callbackId == null) {
             LOG.e(LOG_TAG, "Got plugin result with no callbackId", new Throwable());
             return;
@@ -239,9 +278,13 @@ public class NativeToJsMessageQueue {
     }
 
     private void enqueueMessage(JsMessage message) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         synchronized (this) {
             if (activeBridgeMode == null) {
-                LOG.d(LOG_TAG, "Dropping Native->JS message due to disabled bridge");
+                LOG.d(LOG_TAG, "Dropping Native->JS message due to disabled bridge : " + message.toString());
                 return;
             }
             queue.add(message);
@@ -252,6 +295,10 @@ public class NativeToJsMessageQueue {
     }
 
     public void setPaused(boolean value) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (paused && value) {
             // This should never happen. If a use-case for it comes up, we should
             // change pause to be a counter.
@@ -275,7 +322,12 @@ public class NativeToJsMessageQueue {
 
     /** Uses JS polls for messages on a timer.. */
     public static class NoOpBridgeMode extends BridgeMode {
+
         @Override public void onNativeToJsMessageAvailable(NativeToJsMessageQueue queue) {
+            String nameofCurrMethod = new Throwable()
+                    .getStackTrace()[0]
+                    .getMethodName();
+            LOG.d(LOG_TAG, nameofCurrMethod );
         }
     }
 
@@ -285,12 +337,20 @@ public class NativeToJsMessageQueue {
         private final CordovaInterface cordova;
 
         public LoadUrlBridgeMode(CordovaWebViewEngine engine, CordovaInterface cordova) {
+            String nameofCurrMethod = new Throwable()
+                    .getStackTrace()[0]
+                    .getMethodName();
+            LOG.d(LOG_TAG, nameofCurrMethod );
             this.engine = engine;
             this.cordova = cordova;
         }
 
         @Override
         public void onNativeToJsMessageAvailable(final NativeToJsMessageQueue queue) {
+            String nameofCurrMethod = new Throwable()
+                    .getStackTrace()[0]
+                    .getMethodName();
+            LOG.d(LOG_TAG, nameofCurrMethod );
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     String js = queue.popAndEncodeAsJs();

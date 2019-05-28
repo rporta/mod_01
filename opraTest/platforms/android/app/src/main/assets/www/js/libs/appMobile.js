@@ -1,59 +1,59 @@
 var appMobile = {
-	"background" : {
-		enable : function(){
+	"background": {
+		enable: function() {
 			cordova.plugins.backgroundMode.enable();
 		},
-		disable : function(){
+		disable: function() {
 			cordova.plugins.backgroundMode.disable();
 		},
-		moveToBackground : function(){
+		moveToBackground: function() {
 			cordova.plugins.backgroundMode.moveToBackground();
 		},
-		moveToForeground : function(){
+		moveToForeground: function() {
 			cordova.plugins.backgroundMode.moveToForeground();
 		},
 	},
-	"sms" : {
-		hasReadPermission : function(cbRs, cbErr){
+	"sms": {
+		hasReadPermission: function(cbRs, cbErr) {
 			window.plugins.smsLog.hasReadPermission(cbRs, cbErr);
 		},
-		requestReadPermission : function(cbRs, cbErr){
+		requestReadPermission: function(cbRs, cbErr) {
 			window.plugins.smsLog.requestReadPermission(cbRs, cbErr);
 		},
-		getSmsLog : function(filters, withBody, cbRs, cbErr){
+		getSmsLog: function(filters, withBody, cbRs, cbErr) {
 			window.plugins.smsLog.getSmsLog(filters, withBody, cbRs, cbErr);
 		},
 	},
-	"screenshot" : {
-		save : function(cb, format, quality, filename){
+	"screenshot": {
+		save: function(cb, format, quality, filename) {
 			navigator.screenshot.save(cb, format, quality, filename);
 		},
-		URI : function(cb, quality){
+		URI: function(cb, quality) {
 			navigator.screenshot.URI(cb, quality);
 		},
 	},
-	"socket" : {
-		newSocket : function (host, port){
+	"socket": {
+		newSocket: function(host, port) {
 			return io("http://" + host + ":" + port);
 		}
 	},
-	"wifi" : {
-		init : function(){
+	"wifi": {
+		init: function() {
 			var WifiManager = cordova.plugins.WifiManager;
-			WifiManager.onwifistatechanged = function (data) {
+			WifiManager.onwifistatechanged = function(data) {
 				setTimeout(function() {
 					// h.setText("wifi : statechanged");
 					// footer.setColorText(vueApp.colorText.yellow[5]);
 					setTimeout(function() {
-						if(data.wifiState === "ENABLED"){
+						if (data.wifiState === "ENABLED") {
 							// footer.setColorText(vueApp.colorText.green[5]);
 							// h.setText("wifi : enabled");
-						}else if(data.wifiState === "DISABLED"){
+						} else if (data.wifiState === "DISABLED") {
 							// footer.setColorText(vueApp.colorText.red[5]);
 							// h.setText("wifi : disabled");
 						}
 					}, rootConfig.interval);
-				}, rootConfig.interval);    
+				}, rootConfig.interval);
 			};
 
 			return WifiManager;

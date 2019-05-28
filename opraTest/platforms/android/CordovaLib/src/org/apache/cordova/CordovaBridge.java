@@ -37,11 +37,19 @@ public class CordovaBridge {
     private volatile int expectedBridgeSecret = -1; // written by UI thread, read by JS thread.
 
     public CordovaBridge(PluginManager pluginManager, NativeToJsMessageQueue jsMessageQueue) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         this.pluginManager = pluginManager;
         this.jsMessageQueue = jsMessageQueue;
     }
 
     public String jsExec(int bridgeSecret, String service, String action, String callbackId, String arguments) throws JSONException, IllegalAccessException {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (!verifySecret("exec()", bridgeSecret)) {
             return null;
         }
@@ -71,6 +79,10 @@ public class CordovaBridge {
     }
 
     public void jsSetNativeToJsBridgeMode(int bridgeSecret, int value) throws IllegalAccessException {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (!verifySecret("setNativeToJsBridgeMode()", bridgeSecret)) {
             return;
         }
@@ -78,6 +90,10 @@ public class CordovaBridge {
     }
 
     public String jsRetrieveJsMessages(int bridgeSecret, boolean fromOnlineEvent) throws IllegalAccessException {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (!verifySecret("retrieveJsMessages()", bridgeSecret)) {
             return null;
         }
@@ -85,6 +101,10 @@ public class CordovaBridge {
     }
 
     private boolean verifySecret(String action, int bridgeSecret) throws IllegalAccessException {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (!jsMessageQueue.isBridgeEnabled()) {
             if (bridgeSecret == -1) {
                 LOG.d(LOG_TAG, action + " call made before bridge was enabled.");
@@ -104,10 +124,18 @@ public class CordovaBridge {
 
     /** Called on page transitions */
     void clearBridgeSecret() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         expectedBridgeSecret = -1;
     }
 
     public boolean isSecretEstablished() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         return expectedBridgeSecret != -1;
     }
 
@@ -116,17 +144,29 @@ public class CordovaBridge {
     //you're running Android 4.3 and below in 2017
     @SuppressLint("TrulyRandom")
     int generateBridgeSecret() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         SecureRandom randGen = new SecureRandom();
         expectedBridgeSecret = randGen.nextInt(Integer.MAX_VALUE);
         return expectedBridgeSecret;
     }
 
     public void reset() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         jsMessageQueue.reset();
         clearBridgeSecret();
     }
 
     public String promptOnJsPrompt(String origin, String message, String defaultValue) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(LOG_TAG, nameofCurrMethod );
         if (defaultValue != null && defaultValue.length() > 3 && defaultValue.startsWith("gap:")) {
             JSONArray array;
             try {
