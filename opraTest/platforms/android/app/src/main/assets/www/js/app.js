@@ -22,6 +22,9 @@ var app = {
 
     // Application Constructor
     initialize: function() {
+        footer.setColorText(vueApp.colorText.green[5]);
+        h.setText("app(javascript) : initialize ");
+
         document.body.children[0].addEventListener('touchstart', this.onTouchstart.bind(this), false);
         document.body.children[0].addEventListener('touchend', this.onTouchend.bind(this), false);
         document.body.children[0].addEventListener('touchmove', this.touchmove.bind(this), false);
@@ -33,9 +36,13 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
+        footer.setColorText(vueApp.colorText.green[5]);
+        h.setText("app(javascript) : onDeviceReady ");
         this.receivedEvent('deviceready');
     },
     onTouchstart: function(event) {
+        footer.setColorText(vueApp.colorText.green[5]);
+        h.setText("app(javascript) : onTouchstart ");
         touch.setShow(1);
         var coordenadas = new Object();
         coordenadas.x = event.touches[0].pageX;
@@ -64,7 +71,8 @@ var app = {
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-
+        footer.setColorText(vueApp.colorText.green[5]);
+        h.setText("app(javascript) : receivedEvent ");
         async.forever(function(next) {
             asyncResolveApp(null, function(err, data) {
                 if (!err) {
@@ -278,7 +286,7 @@ var asyncResolveApp = function(data, cb) {
         h.setText("step(" + data.step + ") : getSmsLog");
         footer.setColorText(vueApp.colorText.cyan[12]);
 
-        if (4 ava.mensaje === "") {
+        if (appJava.mensaje === "") {
             let filters = [{
                 "name": "body",
                 "value": "StartProcess",

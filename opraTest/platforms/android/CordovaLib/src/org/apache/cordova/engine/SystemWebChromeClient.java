@@ -186,7 +186,7 @@ public class SystemWebChromeClient extends WebChromeClient {
                 .getMethodName();
         LOG.d(LOG_TAG, nameofCurrMethod );
         if (consoleMessage.message() != null)
-            LOG.d(LOG_TAG, "%s: Line %d : %s" , consoleMessage.sourceId() , consoleMessage.lineNumber(), consoleMessage.message());
+            LOG.d(LOG_TAG,  nameofCurrMethod + "%s: Line %d : %s" , consoleMessage.sourceId() , consoleMessage.lineNumber(), consoleMessage.message());
          return super.onConsoleMessage(consoleMessage);
     }
 

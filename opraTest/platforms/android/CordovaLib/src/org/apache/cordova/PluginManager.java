@@ -392,7 +392,7 @@ public class PluginManager {
                 .getStackTrace()[0]
                 .getMethodName();
 
-        LOG.d(TAG, nameofCurrMethod);
+        LOG.d(TAG, nameofCurrMethod + " : "  + id);
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 Object obj = plugin.onMessage(id, data);
