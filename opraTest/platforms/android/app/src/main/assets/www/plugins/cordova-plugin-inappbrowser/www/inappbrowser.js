@@ -116,7 +116,7 @@ cordova.define("cordova-plugin-inappbrowser.inappbrowser", function(require, exp
 
             strWindowFeatures = strWindowFeatures || '';
 
-            // exec(cb, cb, 'InAppBrowser', 'open', [strUrl, strWindowName, strWindowFeatures]);
+            exec(cb, cb, 'InAppBrowser', 'open', [strUrl, strWindowName, strWindowFeatures]);
             return iab;
         };
     })();

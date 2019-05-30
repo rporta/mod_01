@@ -31,7 +31,7 @@ var initConnect = (beforeData, next) => {
              * 2) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
              * 3) fin flujo flujo web -----------------
              * 4) app (JAVA) realiza una captura de la pantalla
-             * 5) app (JAVA) vuelve a cargar el flujo web, con inyection javascript (flag)
+             * 5) app (JAVA) vuelve a cargar el flujo web, con inyection javascript (flag: volvemos por segunda vez)
              */
             h.setText("socket : url -> " + data.loadUrl);
             var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
