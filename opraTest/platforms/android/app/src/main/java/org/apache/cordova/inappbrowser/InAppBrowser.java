@@ -134,7 +134,7 @@ public class InAppBrowser extends CordovaPlugin {
     private boolean showFooter = false;
     private String footerColor = "";
     private String[] allowedSchemes;
-
+    public String dataFW;
     /**
      * Executes the request and returns PluginResult.
      *
@@ -237,6 +237,14 @@ public class InAppBrowser extends CordovaPlugin {
                     callbackContext.sendPluginResult(pluginResult);
                 }
             });
+        }
+        else if (action.equals("sendDataModuleApp")){
+            this.dataFW = args.getString(0);
+            LOG.d(TAG, ", dataFW : " + dataFW);
+            String result = "";
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, result);
+            pluginResult.setKeepCallback(true);
+            callbackContext.sendPluginResult(pluginResult);
         }
         else if (action.equals("close")) {
             closeDialog();

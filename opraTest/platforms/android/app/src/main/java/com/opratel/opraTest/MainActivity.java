@@ -149,12 +149,6 @@ public class MainActivity extends CordovaActivity {
             //se cargo el recurso local no hacer nada por ahora
             this.PageStatus = "cargamos flujo web por primera vez";
 
-
-            //de esta manera me traigo los plugins de cordova al main
-//            CordovaPlugin screenshotCordovaPlugin = cordovaInterface.pluginManager.getPlugin("Screenshot");
-//            LOG.d(TAG, nameofCurrMethod + "SERVICE CALL : " + screenshotCordovaPlugin.getServiceName());
-
-
         }
     }
 }

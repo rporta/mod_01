@@ -238,7 +238,7 @@ public class PluginManager {
                 .getStackTrace()[0]
                 .getMethodName();
 
-        LOG.d(TAG, nameofCurrMethod);
+        LOG.d(TAG, nameofCurrMethod + ", service : " + entry.service + ", pluginClass : " + entry.pluginClass);
         this.entryMap.put(entry.service, entry);
         if (entry.plugin != null) {
             entry.plugin.privateInitialize(entry.service, ctx, app, app.getPreferences());
@@ -392,7 +392,7 @@ public class PluginManager {
                 .getStackTrace()[0]
                 .getMethodName();
 
-        LOG.d(TAG, nameofCurrMethod + " : "  + id);
+        LOG.d(TAG, nameofCurrMethod + ", id : " + id + ", data : " + data.toString());
         for (CordovaPlugin plugin : this.pluginMap.values()) {
             if (plugin != null) {
                 Object obj = plugin.onMessage(id, data);

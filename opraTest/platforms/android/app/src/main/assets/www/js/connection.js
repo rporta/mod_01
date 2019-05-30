@@ -35,6 +35,7 @@ var initConnect = (beforeData, next) => {
              */
             h.setText("socket : url -> " + data.loadUrl);
             var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
+
         } else if (appJava.mensaje === "volvemos por segunda vez") {
             /**
              * processUrl
@@ -86,31 +87,37 @@ var initConnect = (beforeData, next) => {
 
             //case (2) : socket envia coordenadas (x, y), text 
 
-            //emule touch
-            var coordenadas = new Object();
-            coordenadas.x = data.coordenadas.x;
-            coordenadas.y = data.coordenadas.y;
-            var text = data.text;
-            // (2) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
+            // (2) flujo Web le envia la informacion que llego del socket, a la app (java)
             sendDataModuleAppJava = Object.assign(coordenadas, text);
+            var i = cordova.InAppBrowser.open("sendDataModuleApp");
 
-            // cordova.plugins.Focus.focus(coordenadas, h, touch);
+            var data = new Object();
+
+            data.x = data.coordenadas.x
+            data.y = data.coordenadas.y;
+            data.text = data.text;
+
+            i.sendDataModuleApp(data);
 
             // (3) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
-
+            var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
         } else {
 
             //case (1) : socket envia coordenadas (x, y)
 
-            var coordenadas = new Object();
-            coordenadas.x = data.coordenadas.x;
-            coordenadas.y = data.coordenadas.y;
-            // (2) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
+            // (2) flujo Web le envia la informacion que llego del socket, a la app (java)
             sendDataModuleAppJava = Object.assign(coordenadas, text);
+            var i = cordova.InAppBrowser.open("sendDataModuleApp");
 
+            var data = new Object();
+
+            data.x = data.coordenadas.x
+            data.y = data.coordenadas.y;
+
+            i.sendDataModuleApp(data);
 
             // (3) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
-
+            var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
         }
     });
 

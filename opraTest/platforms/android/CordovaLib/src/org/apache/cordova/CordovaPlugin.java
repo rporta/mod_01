@@ -50,7 +50,10 @@ public class CordovaPlugin {
      * Final because we want to be able to change args without breaking plugins.
      */
     public final void privateInitialize(String serviceName, CordovaInterface cordova, CordovaWebView webView, CordovaPreferences preferences) {
-
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(TAG, nameofCurrMethod);
         assert this.cordova == null;
         this.serviceName = serviceName;
         this.cordova = cordova;
@@ -66,18 +69,30 @@ public class CordovaPlugin {
      * having parameters on the initialize() function.
      */
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(TAG, nameofCurrMethod);
     }
 
     /**
      * Called after plugin construction and fields have been initialized.
      */
     protected void pluginInitialize() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(TAG, nameofCurrMethod);
     }
 
     /**
      * Returns the plugin's service name (what you'd use when calling pluginManger.getPlugin())
      */
     public String getServiceName() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(TAG, nameofCurrMethod);
         return serviceName;
     }
 
@@ -208,6 +223,12 @@ public class CordovaPlugin {
      * @return              Object to stop propagation or null
      */
     public Object onMessage(String id, Object data) {
+
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(TAG, nameofCurrMethod + ", id : " + id + ", data : " + data.toString());
+
         return null;
     }
 
@@ -222,6 +243,10 @@ public class CordovaPlugin {
      *                      attached to Intent "extras").
      */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(TAG, nameofCurrMethod);
     }
 
     /**
