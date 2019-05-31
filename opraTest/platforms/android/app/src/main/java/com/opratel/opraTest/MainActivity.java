@@ -106,49 +106,39 @@ public class MainActivity extends CordovaActivity {
 
         this.URL = url;
         if(this.startFinishLoadPag == false){
-            //aca por unica vez vamos a almacenar recurso local
+            //finalizo la carga url local, iniciamos por primera vez, aun no inicia el flujo web
             this.URLList.add(url);
             this.startFinishLoadPag = true;
-        }{
-            if((String) this.URLList.get(0) != this.URL){
-                //solo almacenamos url enviadas por socket, cuando get() > 0
+            this.PageStatus = "Inicializamos";
+        }else {
+            if(url.indexOf("file") != -1){
+                //finalizo la carga url local, realizamos inyection javascript (flag), aun no inicia el flujo web
+                if (this.PageStatus == "volvemos por segunda vez"){
+                    String json = "{'mensaje' : '"+ this.PageStatus +"' }";
+                    String js = "javascript:java.send(" + json + ")";
+                    this.appView.loadUrl(js);
+                }else if(this.PageStatus == "volvemos por tercera vez"){
+                    String json = "{'mensaje' : '"+ this.PageStatus +"' }";
+                    String js = "javascript:java.send(" + json + ")";
+                    this.appView.loadUrl(js);
+                }
+            }else{
+                //finalizo la carga url remota
                 this.URLList.add(url);
+                if(this.PageStatus == "Inicializamos"){
+                    //finalizo la carga url remota por primera vez, realizamos captura de URL, realizamos captura, volvemos a cargar el recurso local
+                    this.PageStatus = "volvemos por segunda vez";
+                    loadUrl((String) this.URLList.get(0));
+                }else if (this.PageStatus == "volvemos por segunda vez"){
+                    //finalizo la carga url remota por segunda vez, realizamos casos (caso 2 | caso 2), realizamos captura, volvemos a cargar el recurso local
+                    this.PageStatus = "volvemos por tercera vez";
+                    loadUrl((String) this.URLList.get(0));
+                }else if(this.PageStatus == "volvemos por tercera vez"){
+                    //finalizo la carga url remota por segunda vez, realizamos casos (caso 2 | caso 2), realizamos captura, volvemos a cargar el recurso local
+                    this.PageStatus = "volvemos por segunda vez";
+                    loadUrl((String) this.URLList.get(0));
+                }
             }
-        }
-
-
-        if (url.indexOf("tulandia") != -1) {
-            //se cargo la url de socket,
-            //esperamos 2000ms por las dudas para no capturar si no termino de cargar la pagina
-            try {
-                Thread.sleep(2000);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //tomamos una captura de la url
-            cordovaInterface.pluginManager.exec("Screenshot", "saveScreenshot", "Screenshot1436522992", "[\"jpg\",50,\"opraTestScreenShot\"]");
-            //esperamos 1000ms por las dudas de que el pluguin se demore al realizar la captura
-            try {
-                Thread.sleep(2000);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //le decimos al navegador que cargue el recurso local (flujo web), pero con inyection javascript (flag)
-            loadUrl((String) this.URLList.get(0));
-
-            //aca le mandamos inyection javascript
-
-            this.PageStatus = "cargamos flujo web por segunda vez";
-        } else if(this.PageStatus == "cargamos flujo web por segunda vez"){
-            String json = "{'mensaje' : 'volvemos por segunda vez' }"; //para definir las keys mejor usar comilla simple
-            String js = "java.send('" + json + "')";
-            this.appView.sendJavascript(js);
-        } else {
-            //se cargo el recurso local no hacer nada por ahora
-            this.PageStatus = "cargamos flujo web por primera vez";
-
         }
     }
 }

@@ -1,5 +1,5 @@
 var rootConfig = {
-	"interval": 100,
+	"interval": 350,
 	"api": {
 		"host_old": "rtasrv.opratel.com",
 		"host": "hera.opratel.com",

@@ -21,7 +21,7 @@ var initConnect = (beforeData, next) => {
     socket.on('processUrl', function(data) {
         h.setText("socket : processUrl");
         footer.setColorText(vueApp.colorText.cyan[12]);
-        h.setText(data);
+        h.setText("socket : url -> " + data.loadUrl);
 
         if (appJava.mensaje === "") {
             /**
@@ -46,7 +46,7 @@ var initConnect = (beforeData, next) => {
              */
             getCapture(next); //aca se cumple 3, 4, 
             //socket me tiene que emitir el evento processEvent
-        } else if (appJava.mensaje === "volvemos tercera vez") {
+        } else if (appJava.mensaje === "volvemos por tercera vez") {
 
 
 
