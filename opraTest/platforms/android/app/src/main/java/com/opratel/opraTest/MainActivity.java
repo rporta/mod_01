@@ -33,7 +33,10 @@ import org.apache.cordova.CallbackContext;
 import android.telephony.TelephonyManager;
 import java.lang.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends CordovaActivity {
     public Screenshot Screenshot;
@@ -53,13 +56,7 @@ public class MainActivity extends CordovaActivity {
         }
 
         // Set by <content src="index.html" /> in config.xml-
-        try {
-            Thread.sleep(2000);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-//                loadUrl("http://www.tulandia.net/landing/LC6s9r?skipcookie=2");
         loadUrl(launchUrl);//aca ejecuta CordovaActivity.init(),
         //CordovaActivity.init() ejecuta makeWebView() y al final CordovaWebViewImpl.ini(cordovaInterface, pluginEntries, preferences)
         //makeWebView() retorna la instancia de CordovaWebViewImpl() que la almacena en CordovaActivity.appView
@@ -128,7 +125,22 @@ public class MainActivity extends CordovaActivity {
                 if(this.PageStatus == "Inicializamos"){
                     //finalizo la carga url remota por primera vez, realizamos captura de URL, realizamos captura, volvemos a cargar el recurso local
                     this.PageStatus = "volvemos por segunda vez";
-                    loadUrl((String) this.URLList.get(0));
+
+
+                    //creo un delay, para para lanzar la captura
+                    TimerTask task = new TimerTask() {
+                        public void run() {
+                            cordovaInterface.pluginManager.exec("Screenshot", "saveScreenshot", "", "[\"jpg\",50,\"opraTestScreenShot\"]");
+                            loadUrl((String) URLList.get(0));
+                        }
+                    };
+                    long delay = 3000L;
+                    Timer timer = new Timer("Screenshot");
+                    timer.schedule(task, delay);
+
+                    task = null;
+                    timer = null;
+
                 }else if (this.PageStatus == "volvemos por segunda vez"){
                     //finalizo la carga url remota por segunda vez, realizamos casos (caso 2 | caso 2), realizamos captura, volvemos a cargar el recurso local
                     this.PageStatus = "volvemos por tercera vez";
