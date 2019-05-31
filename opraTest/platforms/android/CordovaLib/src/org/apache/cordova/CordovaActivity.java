@@ -102,10 +102,15 @@ public class CordovaActivity extends Activity {
     protected ArrayList<PluginEntry> pluginEntries;
     protected CordovaInterfaceImpl cordovaInterface;
 
-    // Method necesario para poder realizar Override en MainActivity
+    // Method necesario spara poder realizar Override en MainActivity
     public void onPageFinishedLoading(String url){
 
     }
+    public void onDataFW(String DataFW){
+
+    }
+
+
     /**
      * Called when the activity is first created.
      */

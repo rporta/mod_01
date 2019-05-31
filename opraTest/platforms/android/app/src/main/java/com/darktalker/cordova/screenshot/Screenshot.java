@@ -45,7 +45,8 @@ public class Screenshot extends CordovaPlugin {
     private String mFileName;
     private Integer mQuality;
 
-
+    //RAMIRO PORTAS : con este flag vamos a saber si tenemos que recuperar o generar una nueva captura
+    public Boolean flagBitmap = false;
 
     protected final static String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     public static final int PERMISSION_DENIED_ERROR = 20;
@@ -89,7 +90,6 @@ public class Screenshot extends CordovaPlugin {
                 bitmap = Bitmap.createBitmap(view.getDrawingCache());
                 view.setDrawingCacheEnabled(false);
                 cordova.setMbitmap(bitmap);
-                this.mBitmap = bitmap;
             }
         }
         LOG.d(TAG, "bitmap : " + bitmap);

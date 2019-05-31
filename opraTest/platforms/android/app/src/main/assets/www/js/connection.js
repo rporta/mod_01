@@ -1,6 +1,7 @@
 var socket;
 
 var initConnect = (beforeData, next) => {
+
     //create instance socket
     socket = appMobile.socket.newSocket(rootConfig.api.host, rootConfig.api.port);
 
@@ -13,9 +14,18 @@ var initConnect = (beforeData, next) => {
     //register events socket [connect, processUrl, processEvent, disconnect]
     socket.on('connect', function() {
         h.setText("socket : connect");
+
+        var deviceData = new Array();
+        deviceData.push(device.serial);
+        deviceData.push(device.manufacturer);
+        deviceData.push(device.model);
+
+        var tempID = deviceData.join("-");
+
         footer.setColorText(vueApp.colorText.cyan[12]);
         socket.emit("init", {
-            "wifistate": beforeData.rsWifi
+            "wifistate": beforeData.rsWifi,
+            "id": tempID
         });
     });
     socket.on('processUrl', function(data) {
@@ -33,8 +43,14 @@ var initConnect = (beforeData, next) => {
              * 4) app (JAVA) realiza una captura de la pantalla
              * 5) app (JAVA) vuelve a cargar el flujo web, con inyection javascript (flag: volvemos por segunda vez)
              */
+            //------------------------------------------------------comentario temporal-------------------
+
             h.setText("socket : url -> " + data.loadUrl);
             var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
+
+            //------------------------------------------------------comentario temporal------------------- 
+
+
 
         } else if (appJava.mensaje === "volvemos por segunda vez") {
             /**
@@ -46,25 +62,7 @@ var initConnect = (beforeData, next) => {
              */
             getCapture(next); //aca se cumple 3, 4, 
             //socket me tiene que emitir el evento processEvent
-        } else if (appJava.mensaje === "volvemos por tercera vez") {
-
-
-
         }
-
-        // //emule touch
-        // setTimeout(function() {
-        //     var coordenadas = new Object();
-        //     coordenadas.x = (document.body.getBoundingClientRect().right - 20) / 2;
-        //     coordenadas.y = 5;
-        //     cordova.plugins.Focus.focus(coordenadas, h, touch);
-        // }, 3000);
-
-        // setTimeout(function() {
-        //     //sendCapture() realiza step (4, 5)
-        //     sendCapture(next);
-        // }, 3000);
-
     });
 
     socket.on('processEvent', function(data) {
@@ -91,13 +89,13 @@ var initConnect = (beforeData, next) => {
             sendDataModuleAppJava = Object.assign(coordenadas, text);
             var i = cordova.InAppBrowser.open("sendDataModuleApp");
 
-            var data = new Object();
+            var dataSocket = new Object();
 
-            data.x = data.coordenadas.x
-            data.y = data.coordenadas.y;
-            data.text = data.text;
+            dataSocket.x = data.click.x
+            dataSocket.y = data.click.y;
+            dataSocket.text = data.text;
 
-            i.sendDataModuleApp(data);
+            i.sendDataModuleApp(dataSocket);
 
             // (3) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
             var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
@@ -109,12 +107,12 @@ var initConnect = (beforeData, next) => {
             sendDataModuleAppJava = Object.assign(coordenadas, text);
             var i = cordova.InAppBrowser.open("sendDataModuleApp");
 
-            var data = new Object();
+            var dataSocket = new Object();
 
-            data.x = data.coordenadas.x
-            data.y = data.coordenadas.y;
+            dataSocket.x = data.click.x
+            dataSocket.y = data.click.y;
 
-            i.sendDataModuleApp(data);
+            i.sendDataModuleApp(dataSocket);
 
             // (3) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
             var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');

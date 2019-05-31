@@ -40,6 +40,7 @@ import java.util.concurrent.Executors;
  */
 public class CordovaInterfaceImpl implements CordovaInterface {
     private static final String TAG = "CordovaInterfaceImpl";
+    public CordovaActivity contextCordovaActivity;
     protected Activity activity;
     protected ExecutorService threadPool;
     public PluginManager pluginManager;
@@ -51,8 +52,12 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     protected int activityResultRequestCode;
     protected boolean activityWasDestroyed = false;
     protected Bundle savedPluginState;
+    //RAMIRO PORTAS IMPLEMENTAMOS LA INTERFAZ, PARA DARLE USO EN MAIN ACTIVITY----------------------
+
+
     public Bitmap mBitmap;
     public Boolean flagBitmap = false;
+    public String dataFW;
 
     public Bitmap getMbitmap(){
         return this.mBitmap;
@@ -63,7 +68,27 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     public void setFlagBitmap(boolean set){
         this.flagBitmap = set;
     }
+    public void setDataFW(String set){
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        this.dataFW = set;
+        contextCordovaActivity.onDataFW(set);
+        LOG.d(TAG, nameofCurrMethod + ", dataFW : " + this.dataFW);
+    }
+    public String getDataFW(){
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        LOG.d(TAG, nameofCurrMethod + ", dataFW : " + this.dataFW);
 
+
+        return this.dataFW;
+    }
+    public void addContextCordovaActivity(CordovaActivity contextCordovaActivity){
+        this.contextCordovaActivity = contextCordovaActivity;
+    }
+    //RAMIRO PORTAS FIN-----------------------------------------------------------------------------
     public CordovaInterfaceImpl(Activity activity) {
         this(activity, Executors.newCachedThreadPool());
     }

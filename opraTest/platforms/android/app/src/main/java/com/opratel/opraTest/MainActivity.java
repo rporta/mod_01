@@ -19,19 +19,13 @@
 
 package com.opratel.opraTest;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.darktalker.cordova.screenshot.Screenshot;
 
 import org.apache.cordova.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.apache.cordova.CallbackContext;
-import android.telephony.TelephonyManager;
+
+import org.json.JSONObject;
+
+
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,13 +34,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends CordovaActivity {
-    public Bitmap mBitmap;
-    public Screenshot Screenshot;
     public static String TAG = "MainActivity";
     public String URL;
     public List URLList = new ArrayList();
-    public  String PageStatus;
-    public  boolean startFinishLoadPag = false;
+    public String PageStatus;
+    public boolean startFinishLoadPag = false;
+    public String dataFW;
+    public Integer resolveCase;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,16 +110,7 @@ public class MainActivity extends CordovaActivity {
                     String json = "{'mensaje' : '"+ this.PageStatus +"' }";
                     String js = "javascript:java.send(" + json + ")";
                     this.appView.loadUrl(js);
-                    //vamos a hacer el intento de inyection Bitmap a plugin Screenshot, y avisarle que tiene este Bitmap
-                    CordovaPlugin screenshotCordovaPlugin = cordovaInterface.pluginManager.getPlugin("Screenshot");
-                    LOG.d(TAG, nameofCurrMethod + ", mBitmap local:" + mBitmap);
-                    screenshotCordovaPlugin.mBitmap = mBitmap;
-                    screenshotCordovaPlugin.flagBitmap = true;
 
-                }else if(this.PageStatus == "volvemos por tercera vez"){
-                    String json = "{'mensaje' : '"+ this.PageStatus +"' }";
-                    String js = "javascript:java.send(" + json + ")";
-                    this.appView.loadUrl(js);
                 }
             }else{
                 //finalizo la carga url remota
@@ -139,11 +124,6 @@ public class MainActivity extends CordovaActivity {
                     TimerTask task = new TimerTask() {
                         public void run() {
                             cordovaInterface.pluginManager.exec("Screenshot", "saveScreenshot", "", "[\"jpg\",50,\"opraTestScreenShot\"]");
-                            CordovaPlugin screenshotCordovaPlugin = cordovaInterface.pluginManager.getPlugin("Screenshot");
-                            //para no implementar la recuperacion del Bitmap, la en una propery de esta clase
-                            mBitmap = screenshotCordovaPlugin.mBitmap;
-
-                            LOG.d(TAG, nameofCurrMethod + ", mBitmap remota:" + mBitmap);
                             loadUrl((String) URLList.get(0));
                         }
                     };
@@ -155,15 +135,100 @@ public class MainActivity extends CordovaActivity {
                     timer = null;
 
                 }else if (this.PageStatus == "volvemos por segunda vez"){
-                    //finalizo la carga url remota por segunda vez, realizamos casos (caso 2 | caso 2), realizamos captura, volvemos a cargar el recurso local
-                    this.PageStatus = "volvemos por tercera vez";
-                    loadUrl((String) this.URLList.get(0));
-                }else if(this.PageStatus == "volvemos por tercera vez"){
-                    //finalizo la carga url remota por segunda vez, realizamos casos (caso 2 | caso 2), realizamos captura, volvemos a cargar el recurso local
-                    this.PageStatus = "volvemos por segunda vez";
-                    loadUrl((String) this.URLList.get(0));
+                    //finalizo la carga url remota por segunda vez, realizamos casos (CASO 1, CASO2), realizamos captura, volvemos a cargar el recurso local
+                    if(this.resolveCase == 1){
+                        //caso 1
+                        try{
+
+                            JSONObject JsonDataFW = (new JSONObject(dataFW));
+                            //preparo caso 1
+                            Integer x = JsonDataFW.getInt("x");
+                            Integer y = JsonDataFW.getInt("y");
+                            String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":"+ y +"}";
+                            //realizamos toch
+                            cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
+
+                            //creo un delay, para para lanzar la captura
+                            TimerTask task = new TimerTask() {
+                                public void run() {
+                                    cordovaInterface.pluginManager.exec("Screenshot", "saveScreenshot", "", "[\"jpg\",50,\"opraTestScreenShot\"]");
+                                    loadUrl((String) URLList.get(0));
+                                }
+                            };
+                            long delay = 1000L;
+                            Timer timer = new Timer("Screenshot");
+                            timer.schedule(task, delay);
+
+                            task = null;
+                            timer = null;
+
+                        }catch (Exception e){
+
+                        }
+                    }else if (this.resolveCase == 2){
+                        //caso 2
+                        try{
+
+                            JSONObject JsonDataFW = (new JSONObject(dataFW));
+                            //preparo caso 2
+                            Integer x = JsonDataFW.getInt("x");
+                            Integer y = JsonDataFW.getInt("y");
+                            String text = JsonDataFW.getString("text");
+
+
+                            //creo un delay, para para lanzar la captura
+                            TimerTask task = new TimerTask() {
+                                public void run() {
+                                    cordovaInterface.pluginManager.exec("Screenshot", "saveScreenshot", "", "[\"jpg\",50,\"opraTestScreenShot\"]");
+                                    loadUrl((String) URLList.get(0));
+                                }
+                            };
+                            long delay = 1000L;
+                            Timer timer = new Timer("Screenshot");
+                            timer.schedule(task, delay);
+
+                            task = null;
+                            timer = null;
+
+                        }catch (Exception e){
+
+                        }
+                    }
                 }
+
             }
         }
     }
+    /*
+     * RAMIRO PORTAS
+     * ESTE METHOD SE INVOCA CUANDO FLUJO WEB ENVIA DATA AL MODULO APP(JAVA)
+     * */
+
+    @Override
+    public void onDataFW(String dataFW){
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        this.dataFW = dataFW;
+
+        if(URL.indexOf("file") != -1){
+            //Aca el recurso local me esta enviando la data del socket
+            if(this.PageStatus == "volvemos por segunda vez"){
+
+                if(dataFW.indexOf("text") != -1){
+                    //caso 2 touch y data para cargar en input: coordenadas(x, y ), data
+                    LOG.d(TAG, nameofCurrMethod + ", dataFW caso 2: " + dataFW );
+                    this.resolveCase = 2;
+
+                }else{
+                    //caso 1 touch : url, coordenadas(x, y )
+
+                    LOG.d(TAG, nameofCurrMethod + ", dataFW caso 1: " + dataFW );
+                    this.resolveCase = 1;
+                }
+                loadUrl((String) URLList.get(this.URLList.size() - 1));//aca siempre cargamos la ultima URL, remota
+            }
+        }
+    }
+
 }

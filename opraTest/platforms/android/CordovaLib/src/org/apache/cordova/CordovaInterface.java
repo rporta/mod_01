@@ -32,9 +32,13 @@ import java.util.concurrent.ExecutorService;
  * It is used to isolate plugin development, and remove dependency on entire Cordova library.
  */
 public interface CordovaInterface {
+    //RAMIRO PORTAS, propiedades para utlizar en Main Activity
     abstract public Bitmap getMbitmap();
     abstract public void setMbitmap(Bitmap set);
     abstract public void setFlagBitmap(boolean set);
+    abstract public void setDataFW(String set);
+    abstract public String getDataFW();
+    abstract public void addContextCordovaActivity(CordovaActivity contextCordovaActivity);
     /**
      * Launch an activity for which you would like a result when it finished. When this activity exits,
      * your onActivityResult() method will be called.
