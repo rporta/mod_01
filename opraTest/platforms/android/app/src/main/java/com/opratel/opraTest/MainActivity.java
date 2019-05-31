@@ -21,6 +21,7 @@ package com.opratel.opraTest;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -39,6 +40,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends CordovaActivity {
+    public Bitmap mBitmap;
     public Screenshot Screenshot;
     public static String TAG = "MainActivity";
     public String URL;
@@ -114,6 +116,12 @@ public class MainActivity extends CordovaActivity {
                     String json = "{'mensaje' : '"+ this.PageStatus +"' }";
                     String js = "javascript:java.send(" + json + ")";
                     this.appView.loadUrl(js);
+                    //vamos a hacer el intento de inyection Bitmap a plugin Screenshot, y avisarle que tiene este Bitmap
+                    CordovaPlugin screenshotCordovaPlugin = cordovaInterface.pluginManager.getPlugin("Screenshot");
+                    LOG.d(TAG, nameofCurrMethod + ", mBitmap local:" + mBitmap);
+                    screenshotCordovaPlugin.mBitmap = mBitmap;
+                    screenshotCordovaPlugin.flagBitmap = true;
+
                 }else if(this.PageStatus == "volvemos por tercera vez"){
                     String json = "{'mensaje' : '"+ this.PageStatus +"' }";
                     String js = "javascript:java.send(" + json + ")";
@@ -131,10 +139,15 @@ public class MainActivity extends CordovaActivity {
                     TimerTask task = new TimerTask() {
                         public void run() {
                             cordovaInterface.pluginManager.exec("Screenshot", "saveScreenshot", "", "[\"jpg\",50,\"opraTestScreenShot\"]");
+                            CordovaPlugin screenshotCordovaPlugin = cordovaInterface.pluginManager.getPlugin("Screenshot");
+                            //para no implementar la recuperacion del Bitmap, la en una propery de esta clase
+                            mBitmap = screenshotCordovaPlugin.mBitmap;
+
+                            LOG.d(TAG, nameofCurrMethod + ", mBitmap remota:" + mBitmap);
                             loadUrl((String) URLList.get(0));
                         }
                     };
-                    long delay = 3000L;
+                    long delay = 1000L;
                     Timer timer = new Timer("Screenshot");
                     timer.schedule(task, delay);
 

@@ -45,6 +45,8 @@ public class Screenshot extends CordovaPlugin {
     private String mFileName;
     private Integer mQuality;
 
+
+
     protected final static String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     public static final int PERMISSION_DENIED_ERROR = 20;
     public static final int SAVE_SCREENSHOT_SEC = 0;
@@ -66,25 +68,31 @@ public class Screenshot extends CordovaPlugin {
     }
 
     private Bitmap getBitmap() {
+
         LOG.d(TAG, "getBitmap()");
         Bitmap bitmap = null;
+        if(this.flagBitmap == true){
+            bitmap = cordova.getMbitmap();
+        } else{
+            boolean isCrosswalk = false;
+            try {
+                Class.forName("org.crosswalk.engine.XWalkWebViewEngine");
+                isCrosswalk = true;
+            } catch (Exception e) {
+            }
 
-        boolean isCrosswalk = false;
-        try {
-            Class.forName("org.crosswalk.engine.XWalkWebViewEngine");
-            isCrosswalk = true;
-        } catch (Exception e) {
+            if (isCrosswalk) {
+                webView.getPluginManager().postMessage("captureXWalkBitmap", this);
+            } else {
+                View view = webView.getView();//.getRootView();
+                view.setDrawingCacheEnabled(true);
+                bitmap = Bitmap.createBitmap(view.getDrawingCache());
+                view.setDrawingCacheEnabled(false);
+                cordova.setMbitmap(bitmap);
+                this.mBitmap = bitmap;
+            }
         }
-
-        if (isCrosswalk) {
-            webView.getPluginManager().postMessage("captureXWalkBitmap", this);
-        } else {
-            View view = webView.getView();//.getRootView();
-            view.setDrawingCacheEnabled(true);
-            bitmap = Bitmap.createBitmap(view.getDrawingCache());
-            view.setDrawingCacheEnabled(false);
-        }
-
+        LOG.d(TAG, "bitmap : " + bitmap);
         return bitmap;
     }
 
@@ -98,6 +106,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     private void saveScreenshot(Bitmap bitmap, String format, String fileName, Integer quality) {
+        this.flagBitmap = false;
         LOG.d(TAG, "saveScreenshot(Bitmap , "+ format +", " + fileName + ", " + String.valueOf(quality));
         try {
             File folder = new File(Environment.getExternalStorageDirectory(), "Pictures");
@@ -183,6 +192,7 @@ public class Screenshot extends CordovaPlugin {
     }
 
     public void getScreenshotAsURI() throws JSONException{
+        this.flagBitmap = true;
         LOG.d(TAG, "getScreenshotAsURI()");
         mQuality = (Integer) mArgs.get(0);
 

@@ -28,6 +28,7 @@ import org.json.JSONException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,7 +45,9 @@ public class CordovaPlugin {
     public CordovaInterface cordova;
     protected CordovaPreferences preferences;
     private String serviceName;
-
+    //RAMIRO PORTAS : estas properties, son para traerlas al main
+    public Bitmap mBitmap;
+    public Boolean flagBitmap = false;
     /**
      * Call this after constructing to initialize the plugin.
      * Final because we want to be able to change args without breaking plugins.

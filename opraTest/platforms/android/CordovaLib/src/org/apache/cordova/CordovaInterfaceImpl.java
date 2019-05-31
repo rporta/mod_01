@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
@@ -50,6 +51,18 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     protected int activityResultRequestCode;
     protected boolean activityWasDestroyed = false;
     protected Bundle savedPluginState;
+    public Bitmap mBitmap;
+    public Boolean flagBitmap = false;
+
+    public Bitmap getMbitmap(){
+        return this.mBitmap;
+    }
+    public void setMbitmap(Bitmap set){
+        this.mBitmap = set;
+    }
+    public void setFlagBitmap(boolean set){
+        this.flagBitmap = set;
+    }
 
     public CordovaInterfaceImpl(Activity activity) {
         this(activity, Executors.newCachedThreadPool());

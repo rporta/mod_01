@@ -21,6 +21,7 @@ package org.apache.cordova;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
 import org.apache.cordova.CordovaPlugin;
 
@@ -31,7 +32,9 @@ import java.util.concurrent.ExecutorService;
  * It is used to isolate plugin development, and remove dependency on entire Cordova library.
  */
 public interface CordovaInterface {
-
+    abstract public Bitmap getMbitmap();
+    abstract public void setMbitmap(Bitmap set);
+    abstract public void setFlagBitmap(boolean set);
     /**
      * Launch an activity for which you would like a result when it finished. When this activity exits,
      * your onActivityResult() method will be called.
