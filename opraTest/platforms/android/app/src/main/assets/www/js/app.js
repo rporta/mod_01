@@ -71,6 +71,17 @@ var app = {
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+
+        //vamos a notificarle las dimenciones del flujo web al modulo app(Java)
+        var height = $(vueApp.$el).height();
+        var width = $(vueApp.$el).width();
+        var dimension = new Object();
+        dimension.width = width;
+        dimension.height = height;
+        var i = cordova.InAppBrowser.open("sendDataModuleApp");
+        i.sendDataModuleApp(dimension);
+
+
         footer.setColorText(vueApp.colorText.green[5]);
         h.setText("app(javascript) : receivedEvent ");
         async.forever(function(next) {
@@ -84,7 +95,11 @@ var app = {
                         footer.setColorText(vueApp.colorText.yellow[5]);
                         setTimeout(function() {
                             //init connect
-                            initConnect(data, next);
+                            if (rootConfig.dev.testTouch) {
+                                testTouch(data, next);
+                            } else {
+                                initConnect(data, next);
+                            }
                         }, rootConfig.interval);
                     }, rootConfig.interval);
                 } else {

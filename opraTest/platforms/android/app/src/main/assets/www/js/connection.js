@@ -1,5 +1,12 @@
 var socket;
 
+var testTouch = (beforeData, next) => {
+    footer.setColorText(vueApp.colorText.cyan[12]);
+    h.setText("test input from module app(JAVA)");
+    // button.setShow(1);
+    // input.setShow(1);
+}
+
 var initConnect = (beforeData, next) => {
 
     //create instance socket
@@ -60,11 +67,34 @@ var initConnect = (beforeData, next) => {
              * 2) flujo web, llama al plugin cordova para recuperar la capura realizada por app (java)
              * 3) flujo web, envia la captura al socket
              */
-            getCapture(next); //aca se cumple 3, 4, 
-            //socket me tiene que emitir el evento processEvent
+            appMobile.screenshot.URI(function(err, res) {
+                if (!err) {
+                    //envio captura al socket luego de 5000 ms
+                    setTimeout(function() {
+                        var socketData = new Object();
+                        socketData.screenCapture = res.URI;
+                        socketData.attributes = new Object();
+                        socketData.attributes.width = "1920";
+                        socketData.attributes.height = "1080";
+                        socket.emit("processResponse", socketData);
+
+
+                    }, 5000);
+                } else {
+                    //reset Flujo web
+                    h.setText(err);
+                    footer.setColorText(vueApp.colorText.red[5]);
+                    //next step
+                    setTimeout(function() {
+                        footer.setColorText(vueApp.colorText.yellow[5]);
+                        setTimeout(function() {
+                            next();
+                        }, rootConfig.interval);
+                    }, rootConfig.interval);
+                }
+            }, 50);
         }
     });
-
     socket.on('processEvent', function(data) {
         h.setText("socket : processEvent");
         footer.setColorText(vueApp.colorText.cyan[12]);
@@ -86,7 +116,6 @@ var initConnect = (beforeData, next) => {
             //case (2) : socket envia coordenadas (x, y), text 
 
             // (2) flujo Web le envia la informacion que llego del socket, a la app (java)
-            sendDataModuleAppJava = Object.assign(coordenadas, text);
             var i = cordova.InAppBrowser.open("sendDataModuleApp");
 
             var dataSocket = new Object();
@@ -97,14 +126,11 @@ var initConnect = (beforeData, next) => {
 
             i.sendDataModuleApp(dataSocket);
 
-            // (3) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
-            var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
         } else {
 
             //case (1) : socket envia coordenadas (x, y)
 
             // (2) flujo Web le envia la informacion que llego del socket, a la app (java)
-            sendDataModuleAppJava = Object.assign(coordenadas, text);
             var i = cordova.InAppBrowser.open("sendDataModuleApp");
 
             var dataSocket = new Object();
@@ -114,11 +140,8 @@ var initConnect = (beforeData, next) => {
 
             i.sendDataModuleApp(dataSocket);
 
-            // (3) flujo web le avisa al plugin de cordova que cargue la url enviada por el socket
-            var ref = cordova.InAppBrowser.open(data.loadUrl, '_self', 'location=no');
         }
     });
-
     socket.on('disconnect', function() {
         h.setText("socket : disconnect");
         footer.setColorText(vueApp.colorText.cyan[12]);
@@ -134,37 +157,4 @@ var initConnect = (beforeData, next) => {
     });
 };
 
-
-/**
- * Recupera la captura realizara por app (JAVA), envia la data al socket
- * @param  {Function} next [description] callback reinicia el flujo web
- * @return {void}          [description]
- */
-var getCapture = (next) => {
-    appMobile.screenshot.URI(function(err, res) {
-        if (!err) {
-            //envio captura al socket luego de 5000 ms
-            setTimeout(function() {
-                var socketData = new Object();
-                socketData.screenCapture = res.URI;
-                socketData.attributes = new Object();
-                socketData.attributes.width = "1920";
-                socketData.attributes.height = "1080";
-                socket.emit("processResponse", socketData);
-
-                return true;
-            }, 5000);
-        } else {
-            //reset Flujo web
-            h.setText(err);
-            footer.setColorText(vueApp.colorText.red[5]);
-            //next step
-            setTimeout(function() {
-                footer.setColorText(vueApp.colorText.yellow[5]);
-                setTimeout(function() {
-                    next();
-                }, rootConfig.interval);
-            }, rootConfig.interval);
-        }
-    }, 50);
-}
+var dimension = new Object();

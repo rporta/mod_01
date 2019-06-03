@@ -35,12 +35,14 @@ import java.util.TimerTask;
 
 public class MainActivity extends CordovaActivity {
     public static String TAG = "MainActivity";
-    public String URL;
+    public String URL = "";
     public List URLList = new ArrayList();
-    public String PageStatus;
+    public String PageStatus = "";
     public boolean startFinishLoadPag = false;
     public String dataFW;
     public Integer resolveCase;
+    public String dimensionFw;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,9 +102,69 @@ public class MainActivity extends CordovaActivity {
         this.URL = url;
         if(this.startFinishLoadPag == false){
             //finalizo la carga url local, iniciamos por primera vez, aun no inicia el flujo web
+
+            Integer w = this.appView.getView().getWidth();
+            Integer h = this.appView.getView().getHeight();
+            LOG.d(TAG, ", appView getWidth : " + w + ", appView getHeight : " + h);
+
             this.URLList.add(url);
             this.startFinishLoadPag = true;
             this.PageStatus = "Inicializamos";
+
+
+                TimerTask task = new TimerTask() {
+                    public void run() {
+                        //touch
+                        Integer x = 187;
+                        Integer y = 38;
+                        x *= 2;
+                        y *= 2;
+                        String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":" + y + "}";
+                        //realizamos toch
+                        cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
+
+                        TimerTask task = new TimerTask() {
+                            public void run() {
+                                //touch
+                                Integer x = 38;
+                                Integer y = 38;
+                                x *= 2;
+                                y *= 2;
+                                String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":" + y + "}";
+                                //realizamos toch
+                                cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
+
+                                TimerTask task = new TimerTask() {
+                                    public void run() {
+                                        //touch
+                                        Integer x = 38;
+                                        Integer y = 620;
+                                        x *= 2;
+                                        y *= 2;
+                                        String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":" + y + "}";
+                                        //realizamos toch
+                                        cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
+                                    }
+                                };
+                                long delay = 1000L;
+                                Timer timer = new Timer("Focus");
+                                timer.schedule(task, delay);
+                            }
+                        };
+                        long delay = 1000L;
+                        Timer timer = new Timer("Focus");
+                        timer.schedule(task, delay);
+                    }
+                };
+                long delay = 4000L;
+                long periodic = 3000L;
+                Timer timer = new Timer("Focus");
+                timer.schedule(task, delay, periodic);
+
+
+
+
+
         }else {
             if(url.indexOf("file") != -1){
                 //finalizo la carga url local, realizamos inyection javascript (flag), aun no inicia el flujo web
@@ -110,7 +172,6 @@ public class MainActivity extends CordovaActivity {
                     String json = "{'mensaje' : '"+ this.PageStatus +"' }";
                     String js = "javascript:java.send(" + json + ")";
                     this.appView.loadUrl(js);
-
                 }
             }else{
                 //finalizo la carga url remota
@@ -144,6 +205,8 @@ public class MainActivity extends CordovaActivity {
                             //preparo caso 1
                             Integer x = JsonDataFW.getInt("x");
                             Integer y = JsonDataFW.getInt("y");
+                            x *= 2;
+                            y *= 2;
                             String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":"+ y +"}";
                             //realizamos toch
                             cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
@@ -211,8 +274,15 @@ public class MainActivity extends CordovaActivity {
                 .getMethodName();
         this.dataFW = dataFW;
 
-        if(URL.indexOf("file") != -1){
+        if(dataFW.indexOf("height") != -1){
+            LOG.d(TAG, nameofCurrMethod + ", dataFW dimensiones: " + dataFW );
+            this.dimensionFw = dataFW;
+        }
+
+
+        if(URL.indexOf("file") == -1){
             //Aca el recurso local me esta enviando la data del socket
+
             if(this.PageStatus == "volvemos por segunda vez"){
 
                 if(dataFW.indexOf("text") != -1){
