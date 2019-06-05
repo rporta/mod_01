@@ -27,11 +27,16 @@ import org.json.JSONObject;
 
 
 import java.lang.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Pattern;
+
+import android.view.KeyEvent;
+
 
 public class MainActivity extends CordovaActivity {
     public static String TAG = "MainActivity";
@@ -136,14 +141,48 @@ public class MainActivity extends CordovaActivity {
 
                                 TimerTask task = new TimerTask() {
                                     public void run() {
-                                        //touch
-                                        Integer x = 38;
-                                        Integer y = 620;
-                                        x *= 2;
-                                        y *= 2;
-                                        String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":" + y + "}";
-                                        //realizamos toch
-                                        cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
+                                        //insertando la palabra 'BENJA'
+
+
+                                        Field[] f = KeyEvent.class.getDeclaredFields();
+
+                                        for (int i = 0; i < f.length; i++) {
+                                            String currentField = f[i].toString();
+
+                                            if(Pattern.matches(".+KEYCODE_B", currentField)){
+                                                //insert B
+                                                KeyEvent instanceKey = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_B);
+                                                KeyEvent key = null;
+                                                try {
+                                                    key = new KeyEvent(KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey));
+                                                    LOG.d(TAG, "execute dynamic field : " +  currentField + ", value : " + f[i].getInt(instanceKey));
+                                                } catch (IllegalAccessException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                appView.getView().dispatchKeyEvent(key);
+                                            }
+                                        }
+
+
+                                        //insert B
+                                        KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_B);
+                                        appView.getView().dispatchKeyEvent(key);
+
+                                        //insert E
+                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_E);
+                                        appView.getView().dispatchKeyEvent(key);
+
+                                        //insert N
+                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_N);
+                                        appView.getView().dispatchKeyEvent(key);
+
+                                        //insert J
+                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_J);
+                                        appView.getView().dispatchKeyEvent(key);
+
+                                        //insert A
+                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_A);
+                                        appView.getView().dispatchKeyEvent(key);
                                     }
                                 };
                                 long delay = 1000L;
@@ -160,10 +199,6 @@ public class MainActivity extends CordovaActivity {
                 long periodic = 3000L;
                 Timer timer = new Timer("Focus");
                 timer.schedule(task, delay, periodic);
-
-
-
-
 
         }else {
             if(url.indexOf("file") != -1){
