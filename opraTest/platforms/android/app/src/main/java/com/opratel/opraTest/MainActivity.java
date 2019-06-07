@@ -27,15 +27,12 @@ import org.json.JSONObject;
 
 
 import java.lang.*;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
-import android.view.KeyEvent;
+import com.emulate.ProcessKey;
 
 
 public class MainActivity extends CordovaActivity {
@@ -143,46 +140,11 @@ public class MainActivity extends CordovaActivity {
                                     public void run() {
                                         //insertando la palabra 'BENJA'
 
+                                        ProcessKey p = new ProcessKey();
+                                        p.setAppView(appView);
+                                        p.setKey("Estamos realizando una prueba");
+                                        p.emulateProcessKey();
 
-                                        Field[] f = KeyEvent.class.getDeclaredFields();
-
-                                        for (int i = 0; i < f.length; i++) {
-                                            String currentField = f[i].toString();
-
-                                            if(Pattern.matches(".+KEYCODE_B", currentField)){
-                                                //insert B
-                                                KeyEvent instanceKey = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_B);
-                                                KeyEvent key = null;
-                                                try {
-                                                    key = new KeyEvent(KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey));
-                                                    LOG.d(TAG, "execute dynamic field : " +  currentField + ", value : " + f[i].getInt(instanceKey));
-                                                } catch (IllegalAccessException e) {
-                                                    e.printStackTrace();
-                                                }
-                                                appView.getView().dispatchKeyEvent(key);
-                                            }
-                                        }
-
-
-                                        //insert B
-                                        KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_B);
-                                        appView.getView().dispatchKeyEvent(key);
-
-                                        //insert E
-                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_E);
-                                        appView.getView().dispatchKeyEvent(key);
-
-                                        //insert N
-                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_N);
-                                        appView.getView().dispatchKeyEvent(key);
-
-                                        //insert J
-                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_J);
-                                        appView.getView().dispatchKeyEvent(key);
-
-                                        //insert A
-                                        key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_A);
-                                        appView.getView().dispatchKeyEvent(key);
                                     }
                                 };
                                 long delay = 1000L;
