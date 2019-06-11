@@ -142,24 +142,24 @@ public class MainActivity extends CordovaActivity {
 
                                         ProcessKey p = new ProcessKey();
                                         p.setAppView(appView);
-                                        p.setKey("Estamos realizando una prueba");
+                                        p.setKey("prueba fafa");
                                         p.emulateProcessKey();
 
                                     }
                                 };
                                 long delay = 1000L;
-                                Timer timer = new Timer("Focus");
+                                Timer timer = new Timer("emulateProcessKey");
                                 timer.schedule(task, delay);
                             }
                         };
                         long delay = 1000L;
-                        Timer timer = new Timer("Focus");
+                        Timer timer = new Timer("Focus_1");
                         timer.schedule(task, delay);
                     }
                 };
                 long delay = 4000L;
-                long periodic = 3000L;
-                Timer timer = new Timer("Focus");
+                long periodic = 3000L * 3;
+                Timer timer = new Timer("Focus_0");
                 timer.schedule(task, delay, periodic);
 
         }else {
