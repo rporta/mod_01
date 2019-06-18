@@ -142,7 +142,7 @@ public class MainActivity extends CordovaActivity {
 
                                         ProcessKey p = new ProcessKey();
                                         p.setAppView(appView);
-                                        p.setKey("prueba fafa");
+                                        p.setKey("01234567890123456789  prueba");
                                         p.emulateProcessKey();
 
                                     }

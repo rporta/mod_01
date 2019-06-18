@@ -44,7 +44,7 @@ public class ProcessKey {
             Matcher mCase1 = pCase1.matcher(currentChar);
             LOG.d(TAG, " , currentChar : " + currentChar);
             if(mCase1.find()){
-                LOG.d(TAG, "case \\w :  \\s|a-z|A-Z|0-9|_");
+//                LOG.d(TAG, "case \\w :  \\s|a-z|A-Z|0-9|_");
                 //case \w :  \s|a-z|A-Z|0-9|_
                 pCase1 = null;
                 mCase1 = null;
@@ -52,6 +52,7 @@ public class ProcessKey {
                 Pattern pSubCase1 = Pattern.compile("[a-z]");
                 Matcher mSubCase1 = pSubCase1.matcher(currentChar);
                 if(mSubCase1.find()){
+                    LOG.d(TAG, "case a-z");
                     //sub-cases 1: [a-z]
                     for (int i = 0; i < f.length; i++) {
                         currentField = f[i].toString();
@@ -77,6 +78,26 @@ public class ProcessKey {
                 Matcher mSubCase2 = pSubCase2.matcher(currentChar);
                 if(mSubCase2.find()){
                     //sub-cases 2: [A-Z]
+                    LOG.d(TAG, "case A-Z");
+
+                    for (int i = 0; i < f.length; i++) {
+                        currentField = f[i].toString();
+                        Pattern p = Pattern.compile(patternPrefix + currentChar + "$", Pattern.CASE_INSENSITIVE);
+                        Matcher m = p.matcher(currentField);
+                        if(m.find()){
+                            LOG.d(TAG, " , patternPrefix + currentChar : " + patternPrefix + currentChar);
+                            LOG.d(TAG, " , currentField : " + currentField);
+
+                            try {
+                                KeyEvent key = new KeyEvent(0L, 0L, KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey), KeyEvent.META_SHIFT_LEFT_ON);
+                                this.getAppView().getView().dispatchKeyEvent(key);
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+
                 }else{
                     pSubCase2 = null;
                     mSubCase2 = null;
@@ -85,6 +106,23 @@ public class ProcessKey {
                 Matcher mSubCase3 = pSubCase3.matcher(currentChar);
                 if(mSubCase3.find()){
                     //sub-cases 3: [0-9]
+                    for (int i = 0; i < f.length; i++) {
+                        currentField = f[i].toString();
+                        Pattern p = Pattern.compile(patternPrefix + currentChar + "$", Pattern.CASE_INSENSITIVE);
+                        Matcher m = p.matcher(currentField);
+                        if(m.find()){
+                            LOG.d(TAG, " , patternPrefix + currentChar : " + patternPrefix + currentChar);
+                            LOG.d(TAG, " , currentField : " + currentField);
+
+                            try {
+                                KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey));
+                                this.getAppView().getView().dispatchKeyEvent(key);
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
                 }else{
                     pSubCase3 = null;
                     mSubCase3 = null;
@@ -154,6 +192,7 @@ public class ProcessKey {
                 }else{
                     pSubCase5 = null;
                     mSubCase5 = null;
+
                 }
                 Pattern pSubCase6 = Pattern.compile("\\{");
                 Matcher mSubCase6 = pSubCase6.matcher(currentChar);
