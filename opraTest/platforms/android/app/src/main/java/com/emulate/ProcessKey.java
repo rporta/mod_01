@@ -89,7 +89,7 @@ public class ProcessKey {
                             LOG.d(TAG, " , currentField : " + currentField);
 
                             try {
-                                KeyEvent key = new KeyEvent(0L, 0L, KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey), KeyEvent.META_SHIFT_LEFT_ON);
+                                KeyEvent key = new KeyEvent(0L, 0L, KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey), KeyEvent.META_CAPS_LOCK_ON);
                                 this.getAppView().getView().dispatchKeyEvent(key);
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
@@ -157,6 +157,9 @@ public class ProcessKey {
                 Matcher mSubCase1 = pSubCase1.matcher(currentChar);
                 if(mSubCase1.find()){
                     //sub-cases 1: [-]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MINUS);
+                    this.getAppView().getView().dispatchKeyEvent(key);
+
                 }else{
                     pSubCase1 = null;
                     mSubCase1 = null;
@@ -165,6 +168,8 @@ public class ProcessKey {
                 Matcher mSubCase2 = pSubCase2.matcher(currentChar);
                 if(mSubCase2.find()){
                     //sub-cases 2: [.]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PERIOD);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase2 = null;
                     mSubCase2 = null;
@@ -173,6 +178,8 @@ public class ProcessKey {
                 Matcher mSubCase3 = pSubCase3.matcher(currentChar);
                 if(mSubCase3.find()){
                     //sub-cases 3: [,]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_COMMA);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase3 = null;
                     mSubCase3 = null;
@@ -181,6 +188,8 @@ public class ProcessKey {
                 Matcher mSubCase4 = pSubCase4.matcher(currentChar);
                 if(mSubCase4.find()){
                     //sub-cases 4: [;]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SEMICOLON);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase4 = null;
                     mSubCase4 = null;
@@ -214,6 +223,8 @@ public class ProcessKey {
                 Matcher mSubCase8 = pSubCase8.matcher(currentChar);
                 if(mSubCase8.find()){
                     //sub-cases 8: [[]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_LEFT_BRACKET);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase8 = null;
                     mSubCase8 = null;
@@ -222,6 +233,8 @@ public class ProcessKey {
                 Matcher mSubCase9 = pSubCase9.matcher(currentChar);
                 if(mSubCase9.find()){
                     //sub-cases 9: []]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_RIGHT_BRACKET);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase9 = null;
                     mSubCase9 = null;
@@ -230,6 +243,8 @@ public class ProcessKey {
                 Matcher mSubCase10 = pSubCase10.matcher(currentChar);
                 if(mSubCase10.find()){
                     //sub-cases 10: [/]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SLASH);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase10 = null;
                     mSubCase10 = null;
@@ -238,6 +253,8 @@ public class ProcessKey {
                 Matcher mSubCase11 = pSubCase11.matcher(currentChar);
                 if(mSubCase11.find()){
                     //sub-cases 11: [*]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_NUMPAD_MULTIPLY);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase11 = null;
                     mSubCase11 = null;
@@ -246,6 +263,8 @@ public class ProcessKey {
                 Matcher mSubCase12 = pSubCase12.matcher(currentChar);
                 if(mSubCase12.find()){
                     //sub-cases 12: [-]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MINUS);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase12 = null;
                     mSubCase12 = null;
@@ -254,6 +273,8 @@ public class ProcessKey {
                 Matcher mSubCase13 = pSubCase13.matcher(currentChar);
                 if(mSubCase13.find()){
                     //sub-cases 13: [+]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_PLUS);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase13 = null;
                     mSubCase13 = null;
@@ -262,6 +283,8 @@ public class ProcessKey {
                 Matcher mSubCase14 = pSubCase14.matcher(currentChar);
                 if(mSubCase14.find()){
                     //sub-cases 14: [@]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_AT);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase14 = null;
                     mSubCase14 = null;
@@ -278,6 +301,8 @@ public class ProcessKey {
                 Matcher mSubCase16 = pSubCase16.matcher(currentChar);
                 if(mSubCase16.find()){
                     //sub-cases 16: [']
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_APOSTROPHE);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase16 = null;
                     mSubCase16 = null;
@@ -302,6 +327,8 @@ public class ProcessKey {
                 Matcher mSubCase19 = pSubCase19.matcher(currentChar);
                 if(mSubCase19.find()){
                     //sub-cases 19: [#]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_POUND);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase19 = null;
                     mSubCase19 = null;
@@ -342,6 +369,8 @@ public class ProcessKey {
                 Matcher mSubCase24 = pSubCase24.matcher(currentChar);
                 if(mSubCase24.find()){
                     //sub-cases 24: [=]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_NUMPAD_EQUALS);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase24 = null;
                     mSubCase24 = null;
@@ -397,7 +426,9 @@ public class ProcessKey {
                 Pattern pSubCase31 = Pattern.compile("\\\\");
                 Matcher mSubCase31 = pSubCase31.matcher(currentChar);
                 if(mSubCase31.find()){
-                    //sub-cases 31: [>]
+                    //sub-cases 31: [\]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACKSLASH);
+                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase31 = null;
                     mSubCase31 = null;
