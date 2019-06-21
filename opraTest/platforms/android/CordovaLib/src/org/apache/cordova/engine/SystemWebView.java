@@ -29,11 +29,13 @@ import android.webkit.WebViewClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewEngine;
+import org.apache.cordova.LOG;
 
 /**
  * Custom WebView subclass that enables us to capture events needed for Cordova.
  */
 public class SystemWebView extends WebView implements CordovaWebViewEngine.EngineView {
+    public static String TAG = "SystemWebView";
     private SystemWebViewClient viewClient;
     SystemWebChromeClient chromeClient;
     private SystemWebViewEngine parentEngine;
@@ -79,10 +81,30 @@ public class SystemWebView extends WebView implements CordovaWebViewEngine.Engin
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        Boolean ret = parentEngine.client.onDispatchKeyEvent(event);
-        if (ret != null) {
-            return ret.booleanValue();
-        }
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod + " , key : " + String.valueOf(event.getKeyCode()));
         return super.dispatchKeyEvent(event);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod + " , key : " + String.valueOf(event.getKeyCode()));
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, android.view.KeyEvent event) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+
+        LOG.d(TAG, nameofCurrMethod + " , key : " + String.valueOf(event.getKeyCode()));
+        return super.onKeyUp(keyCode, event);
     }
 }

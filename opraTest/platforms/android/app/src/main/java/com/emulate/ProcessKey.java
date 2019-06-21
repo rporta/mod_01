@@ -8,8 +8,10 @@ import org.apache.cordova.LOG;
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import android.inputmethodservice.KeyboardView;
 
 public class ProcessKey {
+    private KeyboardView mInputView;
     public String key;
     protected CordovaWebView appView;
     public static String TAG = "ProcessKey";
@@ -42,7 +44,7 @@ public class ProcessKey {
             String currentChar = String.valueOf(ch);
             Pattern pCase1 = Pattern.compile("\\w", Pattern.CASE_INSENSITIVE);
             Matcher mCase1 = pCase1.matcher(currentChar);
-            LOG.d(TAG, " , currentChar : " + currentChar);
+            LOG.d(TAG, nameofCurrMethod + " , currentChar : " + currentChar);
             if(mCase1.find()){
 //                LOG.d(TAG, "case \\w :  \\s|a-z|A-Z|0-9|_");
                 //case \w :  \s|a-z|A-Z|0-9|_
@@ -89,7 +91,8 @@ public class ProcessKey {
                             LOG.d(TAG, " , currentField : " + currentField);
 
                             try {
-                                KeyEvent key = new KeyEvent(0L, 0L, KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey), KeyEvent.META_CAPS_LOCK_ON);
+                                KeyEvent key = new KeyEvent(0L, 0L, KeyEvent.ACTION_DOWN, f[i].getInt(instanceKey),0, KeyEvent.META_CAPS_LOCK_ON);
+                                //KeyboardView.setShifted(boolean)
                                 this.getAppView().getView().dispatchKeyEvent(key);
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
@@ -259,16 +262,16 @@ public class ProcessKey {
                     pSubCase11 = null;
                     mSubCase11 = null;
                 }
-                Pattern pSubCase12 = Pattern.compile("-");
-                Matcher mSubCase12 = pSubCase12.matcher(currentChar);
-                if(mSubCase12.find()){
-                    //sub-cases 12: [-]
-                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MINUS);
-                    this.getAppView().getView().dispatchKeyEvent(key);
-                }else{
-                    pSubCase12 = null;
-                    mSubCase12 = null;
-                }
+//                Pattern pSubCase12 = Pattern.compile("-");
+//                Matcher mSubCase12 = pSubCase12.matcher(currentChar);
+//                if(mSubCase12.find()){
+//                    //sub-cases 12: [-]
+//                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MINUS);
+//                    this.getAppView().getView().dispatchKeyEvent(key);
+//                }else{
+//                    pSubCase12 = null;
+//                    mSubCase12 = null;
+//                }
                 Pattern pSubCase13 = Pattern.compile("\\+");
                 Matcher mSubCase13 = pSubCase13.matcher(currentChar);
                 if(mSubCase13.find()){
@@ -293,6 +296,8 @@ public class ProcessKey {
                 Matcher mSubCase15 = pSubCase15.matcher(currentChar);
                 if(mSubCase15.find()){
                     //sub-cases 15: ["]
+//                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_APOSTROPHE);
+//                    this.getAppView().getView().dispatchKeyEvent(key);
                 }else{
                     pSubCase15 = null;
                     mSubCase15 = null;
@@ -432,6 +437,26 @@ public class ProcessKey {
                 }else{
                     pSubCase31 = null;
                     mSubCase31 = null;
+                }
+                Pattern pSubCase32 = Pattern.compile("\\(");
+                Matcher mSubCase32 = pSubCase32.matcher(currentChar);
+                if(mSubCase32.find()){
+                    //sub-cases 32: [(]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_NUMPAD_LEFT_PAREN);
+                    this.getAppView().getView().dispatchKeyEvent(key);
+                }else{
+                    pSubCase32 = null;
+                    mSubCase32 = null;
+                }
+                Pattern pSubCase33 = Pattern.compile("\\)");
+                Matcher mSubCase33 = pSubCase33.matcher(currentChar);
+                if(mSubCase33.find()){
+                    //sub-cases 33: [)]
+                    KeyEvent key = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN);
+                    this.getAppView().getView().dispatchKeyEvent(key);
+                }else{
+                    pSubCase33 = null;
+                    mSubCase33 = null;
                 }
             }
         }

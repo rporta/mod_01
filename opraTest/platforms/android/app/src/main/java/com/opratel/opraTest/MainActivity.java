@@ -20,6 +20,7 @@
 package com.opratel.opraTest;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import org.apache.cordova.*;
 
@@ -142,7 +143,7 @@ public class MainActivity extends CordovaActivity {
 
                                         ProcessKey p = new ProcessKey();
                                         p.setAppView(appView);
-                                        p.setKey("01234567890123456789  Prueba #[ - ] / * + ' = \\  1. 123, 45; @6");
+                                        p.setKey("asd ASD");
                                         p.emulateProcessKey();
 
                                     }
@@ -158,9 +159,9 @@ public class MainActivity extends CordovaActivity {
                     }
                 };
                 long delay = 4000L;
-                long periodic = 3000L * 3;
+                long periodic = 0L;
                 Timer timer = new Timer("Focus_0");
-                timer.schedule(task, delay, periodic);
+                timer.schedule(task, delay);
 
         }else {
             if(url.indexOf("file") != -1){
@@ -297,5 +298,9 @@ public class MainActivity extends CordovaActivity {
             }
         }
     }
-
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        LOG.d(TAG, "fffffffffffffffffffffffffffs" + String.valueOf(event.getKeyCode()));
+        return super.dispatchKeyEvent(event);
+    }
 }

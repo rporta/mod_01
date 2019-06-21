@@ -566,6 +566,7 @@ public class CordovaWebViewImpl implements CordovaWebView {
 
         @Override
         public Boolean onDispatchKeyEvent(KeyEvent event) {
+            //LOG.d(TAG, "onDispatchKeyEvent" + " , key : " + String.valueOf(event.getKeyCode()));
             int keyCode = event.getKeyCode();
             boolean isBackButton = keyCode == KeyEvent.KEYCODE_BACK;
             if (event.getAction() == KeyEvent.ACTION_DOWN) {

@@ -34,8 +34,10 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -109,7 +111,11 @@ public class CordovaActivity extends Activity {
     public void onDataFW(String DataFW){
 
     }
-
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        LOG.d(TAG,"asf" + String.valueOf(event.getKeyCode()));
+        return super.dispatchKeyEvent(event);
+    }
 
     /**
      * Called when the activity is first created.
