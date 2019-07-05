@@ -6,6 +6,6 @@ var rootConfig = {
         "port": "10001"
     },
     "dev": {
-        "testTouch": 1
+        "testTouch": 0
     }
 };

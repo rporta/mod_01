@@ -29,7 +29,7 @@ var img = vueApp.newComponent("c-img");
 // iframe.setSrc("http://tulandia.net/landing/LC6s9r?skipcookie=2");
 // iframe.setSrc("http://tulandia.net/");
 var button = vueApp.newComponent("c-button").setText("OPEN:MODAL").setShow(0);
-var input = vueApp.newComponent("c-input-fields").setText("textFAFA").setColorText(vueApp.colorText.cyan[12]).setShow(1);
+var input = vueApp.newComponent("c-input-fields").setText("textFAFA").setColorText(vueApp.colorText.cyan[12]).setShow(0);
 main.create(button);
 main.create(input);
 footer.create(h);

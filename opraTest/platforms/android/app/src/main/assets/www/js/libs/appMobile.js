@@ -35,6 +35,18 @@ var appMobile = {
 	"socket": {
 		newSocket: function(host, port) {
 			return io("http://" + host + ":" + port);
+		},
+		newSocketCordova: function(host, port) {
+			var s = new Socket();
+			s.open(
+				host,
+				port,
+				function() {
+					return s;
+				},
+				function(errorMessage) {
+					return false;
+				});
 		}
 	},
 	"wifi": {

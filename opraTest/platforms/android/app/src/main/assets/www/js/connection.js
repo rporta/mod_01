@@ -8,6 +8,12 @@ var testTouch = (beforeData, next) => {
 }
 
 var initConnect = (beforeData, next) => {
+    h.setText("new socket connect");
+
+
+};
+
+var initConnectr = (beforeData, next) => {
 
     //create instance socket
     socket = appMobile.socket.newSocket(rootConfig.api.host, rootConfig.api.port);

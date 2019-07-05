@@ -34,6 +34,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.emulate.ProcessKey;
+import com.socketImplement.socketConection;
 
 
 public class MainActivity extends CordovaActivity {
@@ -72,6 +73,10 @@ public class MainActivity extends CordovaActivity {
         //al crear la instancia de SystemWebView, en el constructor, le pasa el conteto al super WebView y ejecuta el contructor de WebView
         //WebView extiende de MockView, al ejecutar el constructor de WebView, le pasa el conteto al super MockView (aca creo que es posible realizar recursion CordovaActivity <-> MockView),
         //la clase MockView viene del package
+
+        socketConection socket = new socketConection("200.110.137.84", 10001);
+
+
 
     }
 
@@ -113,56 +118,6 @@ public class MainActivity extends CordovaActivity {
             this.URLList.add(url);
             this.startFinishLoadPag = true;
             this.PageStatus = "Inicializamos";
-
-
-                TimerTask task = new TimerTask() {
-                    public void run() {
-                        //touch
-                        Integer x = 187;
-                        Integer y = 38;
-                        x *= 2;
-                        y *= 2;
-                        String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":" + y + "}";
-                        //realizamos toch
-                        cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
-
-                        TimerTask task = new TimerTask() {
-                            public void run() {
-                                //touch
-                                Integer x = 38;
-                                Integer y = 38;
-                                x *= 2;
-                                y *= 2;
-                                String ParamFocus = "{\"top\":0,\"left\":0,\"right\":" + x + ",\"bottom\":" + y + "}";
-                                //realizamos toch
-                                cordovaInterface.pluginManager.exec("Focus", "focus", "", "[" + ParamFocus + "]");
-
-                                TimerTask task = new TimerTask() {
-                                    public void run() {
-                                        //insertando la palabra 'BENJA'
-
-                                        ProcessKey p = new ProcessKey();
-                                        p.setAppView(appView);
-                                        p.setKey("asd ASD");
-                                        p.emulateProcessKey();
-
-                                    }
-                                };
-                                long delay = 1000L;
-                                Timer timer = new Timer("emulateProcessKey");
-                                timer.schedule(task, delay);
-                            }
-                        };
-                        long delay = 1000L;
-                        Timer timer = new Timer("Focus_1");
-                        timer.schedule(task, delay);
-                    }
-                };
-                long delay = 4000L;
-                long periodic = 0L;
-                Timer timer = new Timer("Focus_0");
-                timer.schedule(task, delay);
-
         }else {
             if(url.indexOf("file") != -1){
                 //finalizo la carga url local, realizamos inyection javascript (flag), aun no inicia el flujo web
@@ -297,10 +252,5 @@ public class MainActivity extends CordovaActivity {
                 loadUrl((String) URLList.get(this.URLList.size() - 1));//aca siempre cargamos la ultima URL, remota
             }
         }
-    }
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        LOG.d(TAG, "fffffffffffffffffffffffffffs" + String.valueOf(event.getKeyCode()));
-        return super.dispatchKeyEvent(event);
     }
 }

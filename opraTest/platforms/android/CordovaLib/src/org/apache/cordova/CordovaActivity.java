@@ -111,12 +111,6 @@ public class CordovaActivity extends Activity {
     public void onDataFW(String DataFW){
 
     }
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        LOG.d(TAG,"asf" + String.valueOf(event.getKeyCode()));
-        return super.dispatchKeyEvent(event);
-    }
-
     /**
      * Called when the activity is first created.
      */
