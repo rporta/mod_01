@@ -269,6 +269,7 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
     // SUB-PROJECT DEPENDENCIES END
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 }
 
 def promptForReleaseKeyPassword() {

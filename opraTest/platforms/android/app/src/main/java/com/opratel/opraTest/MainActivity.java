@@ -28,14 +28,15 @@ import org.json.JSONObject;
 
 
 import java.lang.*;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.emulate.ProcessKey;
-import com.socketImplement.socketConection;
 
+import com.socketImplement.socketConection;
 
 public class MainActivity extends CordovaActivity {
     public static String TAG = "MainActivity";
@@ -46,6 +47,7 @@ public class MainActivity extends CordovaActivity {
     public String dataFW;
     public Integer resolveCase;
     public String dimensionFw;
+    public socketConection socket;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,12 +76,20 @@ public class MainActivity extends CordovaActivity {
         //WebView extiende de MockView, al ejecutar el constructor de WebView, le pasa el conteto al super MockView (aca creo que es posible realizar recursion CordovaActivity <-> MockView),
         //la clase MockView viene del package
 
-        socketConection socket = new socketConection("200.110.137.84", 10001);
+        socketConection s = new socketConection("hera.opratel.com", 10001);
 
-
+        this.setSocket(s);
+        this.getSocket().init();
 
     }
 
+    public socketConection getSocket() {
+        return socket;
+    }
+
+    public void setSocket(socketConection socket) {
+        this.socket = socket;
+    }
     /*
      * RAMIRO PORTAS
      * ESTE METHOD SE LLAMA CUANDO SE DISPARA EL EVENTO AL CARGAR UNA NUEVA PAGINA

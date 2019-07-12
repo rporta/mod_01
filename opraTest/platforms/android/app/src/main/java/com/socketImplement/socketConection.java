@@ -1,106 +1,90 @@
 package com.socketImplement;
+
+import org.apache.cordova.LOG;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
+import java.net.URISyntaxException;
+
+import com.github.nkzawa.socketio.client.IO;
+
 
 public class socketConection {
 
-    private String ip;
+    public static String TAG = "socketConection";
+    private String host;
     private int port;
-    private Socket socket;
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
+    private com.github.nkzawa.socketio.client.Socket socket;
+
     public socketConection(){
         this(null, 0);
     }
 
-    public socketConection (String ip, int port){
-        this.ip = ip;
+    public socketConection (String host, int port){
+        this.host = host;
         this.port = port;
     }
 
-    public String getIp() {
-        return this.ip;
+    public String getHost() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        return this.host;
     }
 
     public int getPort() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
         return this.port;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void sethost(String host) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        this.host = host;
     }
 
     public void setPort(int port) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
         this.port = port;
     }
 
-    public Socket getSocket() {
+    public com.github.nkzawa.socketio.client.Socket getSocket() {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
         return this.socket;
     }
 
-    public void setSocket(Socket socket) {
+    public void setSocket(com.github.nkzawa.socketio.client.Socket socket) {
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
         this.socket = socket;
     }
 
-    public ObjectInputStream getOis() {
-        return this.ois;
-    }
-
-    public void generateIos() throws IOException {
-        this.ois = new ObjectInputStream(this.getSocket().getInputStream());
-    }
-
-    public ObjectOutputStream getOos() {
-        return this.oos;
-    }
-
-    public void generateOos() throws IOException {
-        this.oos = new ObjectOutputStream(this.getSocket().getOutputStream());
-    }
     public void init(){
-        new Thread(new ClientThread()).start();
-    }
+        String nameofCurrMethod = new Throwable()
+                .getStackTrace()[0]
+                .getMethodName();
+        try {
+            this.setSocket(IO.socket("http://" + this.getHost() + ":" + this.getPort()));
+            this.connect();
 
-    public void initConection() throws IOException {
-        if(this.getIp() != null){
 
-            InetAddress serverAddr = InetAddress.getByName(this.getIp());
+        } catch (URISyntaxException e) {
 
-            this.setSocket(new Socket(serverAddr, this.getPort()));
-            this.generateIos();
-            this.generateOos();
-        }
-    }
-    public void sendData(String data) throws IOException {
-        //write to socket using ObjectOutputStream
-        ObjectOutputStream oos = new ObjectOutputStream(this.getSocket().getOutputStream());
-        System.out.println(data);
-    }
-    public String getData() throws IOException, ClassNotFoundException {
-
-        String message = (String) this.getOis().readObject();
-        System.out.println("Message: " + message);
-        return message;
-
-    }
-
-    public void close() throws IOException {
-        this.getOis().close();
-        this.getOos().close();
-    }
-    class ClientThread implements Runnable {
-
-        @Override
-        public void run() {
-            try {
-                initConection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
+    public void connect(){
+        this.getSocket().connect();
+    }
 }
