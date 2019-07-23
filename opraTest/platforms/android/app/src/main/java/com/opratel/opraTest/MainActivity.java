@@ -80,6 +80,7 @@ public class MainActivity extends CordovaActivity {
 
         this.setSocket(s);
         this.getSocket().init();
+//        this.getSocket().sendEvent("init", "fafafafafafafa");
 
     }
 

@@ -1,6 +1,8 @@
 package com.socketImplement;
 
 import org.apache.cordova.LOG;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -10,14 +12,17 @@ import java.net.InetAddress;
 import java.net.URISyntaxException;
 
 import com.github.nkzawa.socketio.client.IO;
-
+import com.github.nkzawa.emitter.Emitter;
 
 public class socketConection {
+
+    public JSONObject data;
 
     public static String TAG = "socketConection";
     private String host;
     private int port;
     private com.github.nkzawa.socketio.client.Socket socket;
+    private Emitter.Listener onNewMessage;
 
     public socketConection(){
         this(null, 0);
@@ -77,14 +82,41 @@ public class socketConection {
         try {
             this.setSocket(IO.socket("http://" + this.getHost() + ":" + this.getPort()));
             this.connect();
-
-
+            this.listeningOnEvents();
+            this.sendEvent("init", "arranca?");
         } catch (URISyntaxException e) {
 
         }
     }
 
+    public void listeningOnEvents(){
+
+        this.getSocket().on("processUrl", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                JSONObject data = (JSONObject) args[0];
+                setData(data);
+                LOG.d(TAG, "fafa" + getData());
+            }
+        });
+
+
+    }
+
+    public void sendEvent(String event, Object... data){
+        this.getSocket().emit(event, data);
+    }
+
     public void connect(){
         this.getSocket().connect();
+    }
+
+    public void setData(JSONObject data) {
+        this.data = data;
+    }
+
+    public JSONObject getData() {
+        return data;
     }
 }
