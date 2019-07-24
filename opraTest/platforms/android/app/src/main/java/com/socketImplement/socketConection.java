@@ -83,7 +83,6 @@ public class socketConection {
             this.setSocket(IO.socket("http://" + this.getHost() + ":" + this.getPort()));
             this.connect();
             this.listeningOnEvents();
-            this.sendEvent("init", "arranca?");
         } catch (URISyntaxException e) {
 
         }
@@ -91,6 +90,21 @@ public class socketConection {
 
     public void listeningOnEvents(){
 
+        //ss nos avisa que conectamos, debemos init
+        this.getSocket().on("connect", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                JSONObject data = (JSONObject) args[0];
+                setData(data);
+                LOG.d(TAG, "fafa" + getData());
+                emitInit();//le enviamos a ss wifistate, id
+            }
+        });
+
+
+
+        //ss nos envia la url para cargar en la app, debemos emitir
         this.getSocket().on("processUrl", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -98,12 +112,50 @@ public class socketConection {
                 JSONObject data = (JSONObject) args[0];
                 setData(data);
                 LOG.d(TAG, "fafa" + getData());
+                emitProcessResponse();//le enviamos a ss la captura
+
             }
         });
 
+        //ss nos envia un array de processEvent
+        this.getSocket().on("processEvent", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                JSONObject data = (JSONObject) args[0];
+                setData(data);
+                LOG.d(TAG, "fafa" + getData());
+                resolveProcesEvent();//realiza los touch y carga de datos
+                emitProcessResponse();//le enviamos a ss la captura
+            }
+        });
+        //ss nos envia la orden que desconectemos
+        this.getSocket().on("disconnect", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                JSONObject data = (JSONObject) args[0];
+                setData(data);
+                LOG.d(TAG, "onDisconnect" + getData());
+                emitDisconnect();
+            }
+        });
+
+    }
+    public void resolveProcesEvent(){
 
     }
 
+    public void emitProcessResponse(){//enviamos la captura
+
+        this.sendEvent("processResponse", "data");
+    }
+    public void emitDisconnect(){
+        this.sendEvent("disconnect", "true");
+    }
+    public void emitInit(){
+        this.sendEvent("Init", "data");
+    }
     public void sendEvent(String event, Object... data){
         this.getSocket().emit(event, data);
     }

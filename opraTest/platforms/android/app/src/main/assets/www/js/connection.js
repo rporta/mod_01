@@ -13,7 +13,7 @@ var initConnect = (beforeData, next) => {
 
 };
 
-var initConnectr = (beforeData, next) => {
+var initConnectDisabled = (beforeData, next) => {
 
     //create instance socket
     socket = appMobile.socket.newSocket(rootConfig.api.host, rootConfig.api.port);
