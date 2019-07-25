@@ -130,8 +130,8 @@ var middleware = require('./routes/middleware');
 app.use('/:oid/mw', middleware);
 
 //RAMIRO PORTAS //http://api-dale.sva.antel.com.uy/swagger-ui.html#!/Suscripciones/cancelarSuscripcionUsingPOST
-var cancelarSuscripcion = require('./routes/cancelarSuscripcion');
-app.use('/:oid/cancelarsuscripcion', cancelarSuscripcion);
+var unsubscribe = require('./routes/unsubscribe');
+app.use('/:oid/unsubscribe', unsubscribe);
 
 processUnsubscription = (redisString, cb) => {
     var redisObj = JSON.parse(redisString);

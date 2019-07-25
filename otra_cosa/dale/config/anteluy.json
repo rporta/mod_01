@@ -44,36 +44,53 @@
 		"CUSTOMER_CHARGE_ACCEPT_UNCONFIRMED": 18,
 		"CUSTOMER_REJECTED_CHARGE": 21
 	},
-	"daleMap": [{
-		"id": "4",
-		"Medio": "32533",
-		"serviceId": "OPFO01",
-		"PortalId": "OPFO",
-	}, {
-		"id": "5",
-		"Medio": "32533",
-		"serviceId": "OPFO04",
-		"PortalId": "OPFO",
-	}, {
-		"id": "7",
-		"Medio": "32533",
-		"serviceId": "OPFO02",
-		"PortalId": "OPFO",
-	}, {
-		"id": "1",
-		"Medio": "32533",
-		"serviceId": "OPFO01",
-		"PortalId": "OPEA",
-	}],
 	"serviceMap": {
 		"557": {
-			"paqueteId:x": {
-				"serviceId": "OPEA01",
+			"789": {
+				"serviceId": "OPFO01",
+				"portalId": "OPFO",
 			},
 		},
 		"558": {
-			"paqueteId:x": {
-				"serviceId": "OPEA01",
+			"789": {
+				"serviceId": "OPFO01",
+				"portalId": "OPFO",
+			},
+		},
+		"557": {
+			"796": {
+				"serviceId": "OPFO04",
+				"portalId": "OPFO",
+			},
+		},
+		"558": {
+			"796": {
+				"serviceId": "OPFO04",
+				"portalId": "OPFO",
+			},
+		},
+		"557": {
+			"797": {
+				"serviceId": "OPFO02",
+				"portalId": "OPFO",
+			},
+		},
+		"558": {
+			"797": {
+				"serviceId": "OPFO02",
+				"portalId": "OPFO",
+			},
+		},
+		"557": {
+			"798": {
+				"serviceId": "OPFO01",
+				"PortalId": "OPEA",
+			},
+		},
+		"558": {
+			"798": {
+				"serviceId": "OPFO01",
+				"PortalId": "OPEA",
 			},
 		},
 	},
